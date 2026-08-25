@@ -1,0 +1,36 @@
+/* Vamos a poner esta fuente para todos los elementos visibles de la pagina */
+body {
+    font-family: monospace;
+}
+
+h1 {
+    color: green;
+}
+
+/* Vamos a poner esta fuente para todos los elementos visibles de la pagina */
+
+/* Seleccionamos la etiqueta div para darle un estilo a TODOS los div de la pagina */
+div {
+    border: 2px solid;
+    margin-bottom: 15px;
+}
+
+/* Seleccionamos elementos comunes con el nombre de la clase .nombreClase */
+.ciudades {
+    text-align: center;
+    padding: 25px;
+}
+
+/* Seleccionamos elementos UNICOS con el nombre del id #nombreId */
+#cordoba {
+    background-color: #00bbf1;
+}
+
+#rosario {
+    background-color: #002b70;
+    color: #fbca01;
+}
+
+#tandil {
+    background-color: #C44545;
+}

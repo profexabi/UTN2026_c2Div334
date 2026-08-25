@@ -41,6 +41,13 @@
 ---
 
 # Cronograma clases
+
+## Clase 2
+- Desde Elementos en bloque y en linea hasta HTML Forms
+- [Clases, Ids](https://www.w3schools.com/html/html_classes.asp)
+- [Divs y etiquetas semanticas](https://www.w3schools.com/html/html_div.asp)
+- Prox clase vamos a ver HTML Forms y saltar a CSS
+
 ## Clase 1
 - HTML hasta [Elementos en Bloque y Elementos en Linea](https://www.w3schools.com/html/html_blocks.asp)
 - **Recordatorio: TODAS las etiquetas en linea iran siempre dentro de etiquetas en bloque. [Leccion W3 Schools](https://www.w3schools.com/html/html_formatting.asp)**

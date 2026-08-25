@@ -12,21 +12,51 @@
         <!-- Titulo de nuestra pagina web -->
          <title>Muestra pagina 334</title>
 
-         <style>
-            /* Vamos a poner esta fuente para todos los elementos visibles de la pagina */
-            /*
-            body {
-                font-family: monospace;
-            }
-            */
-         </style>
+        <!-- Todo lo que esta adentro de style es codigo CSS -->
+        <style>
+
+
+
+        </style>
 
         <!-- link -> Enlace a una hoja de estilos con el codigo CSS -->
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="css/styles.css">
+    
     </head>
 
     <!-- Informacion visible (cuerpo de la pagina) -->
      <body>
+
+        <!-- Contenedores simples (div) de ciudades -->
+        <div class="ciudades" id="cordoba">
+            <h2>Cordoba</h2>
+            <p>Provincia del fernet con coca, el vino prittyado, la Mona Jimenez y el cuarteto</p>
+        </div>
+
+        <div class="ciudades" id="rosario">
+            <h2>Rosario</h2>
+            <p>Cuna de Messi, del fideo y Colapinto. Tiene el famoso monumento a la bandera y siempre estuvo cerca</p>
+        </div>
+
+        <div class="ciudades" id="tandil">
+            <h2>Tandil</h2>
+            <p>Terribles embutidos, los mejores salames y lugar de las sierras y de Del Potro</p>
+        </div>
+
+        <div class="ciudades">
+            <h2>Lanus</h2>
+            <p>Ciudad de D10S. Recomendable ir al Parque Eva Peron y al velodromo, ademas de la estatua del Laucha Acosta</p>
+        </div>
+
+        <div class="ciudades">
+            <h2>La Rioja</h2>
+            <p>La ciudad de las aceitunas y el aceite de oliva</p>
+        </div>
+
+
+
+        <hr>
+
         <!-- h1 se refiere a encabezado (heading) tamaño 1 -->
         <h1>Titulo principal</h1>
 
@@ -45,21 +75,25 @@
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut eum quo harum amet non, repellendus cum necessitatibus ab doloremque, ea quod in numquam dolorum blanditiis? Obcaecati harum labore quidem quas?</p>
 
         <!-- Titulo intermedio -->
-        <h4>Discografia de Divididos</h4>
-        <!-- Lista ordenada -->
-        <ol> <!-- Contenedor de elemntos lista, ul significa unordered list-->
-            <li>Disco 1</li>
-            <li>Disco 2</li>
-            <li>Disco 3</li>
-            <li>Disco 4</li>
-        </ol>
+        <div>
+            <h4>Discografia de Divididos</h4>
+            <!-- Lista ordenada -->
+            <ol> <!-- Contenedor de elemntos lista, ul significa unordered list-->
+                <li>Disco 1</li>
+                <li>Disco 2</li>
+                <li>Disco 3</li>
+                <li>Disco 4</li>
+            </ol>
+        </div>
 
-        <h4>Integrantes</h4>
-        <ul>
-            <li>Mollo</li>
-            <li>Diego Arnedo</li>
-            <li>Araujo</li>
-        </ul>
+        <div>
+            <h4>Integrantes</h4>
+            <ul>
+                <li>Mollo</li>
+                <li>Diego Arnedo</li>
+                <li>Araujo</li>
+            </ul>
+        </div>
 
         <hr>
 

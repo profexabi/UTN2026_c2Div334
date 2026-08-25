@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Google</title>
+    <!-- https://about.google/intl/es_ALL/ -->
+
+    <!-- Estilo CSS interno -->
+    <style>
+
+        /* Selectores de etiqueta (estila todas las etiquetas de la pagina) */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        header, .header-nav ul {
+            display: flex;
+            align-items: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+
+        /* Estilan todos los elementos que compartan el mismo nombre */
+        .header-logo {
+            width: 10%;
+            display: flex;
+            justify-content: center;
+        }
+
+        .header-nav {
+            width: 35%;
+        }
+
+
+        .header-nav ul {
+            padding-left: 0;
+            list-style-type: none;
+            justify-content: space-between;
+        }
+
+
+        .portada {
+            background-color: #f1edea;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 95vh;
+            justify-content: space-around;
+        }
+
+        .portada h1 {
+            font-size: 72px;
+            font-weight: normal;
+        }
+
+        .p-gris {
+            font-size: 18px;
+            color: #5f6368;
+        }
+
+        .btn-primario {
+            background-color: #1a73e8;
+            color: white;
+            padding: 12px 24px;
+            border: 1px solid transparent;
+            border-radius: 48px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Estilamos el video como elemento unico, gracias al id */
+        #portada-video {
+            width: 100%;
+        }
+
+
+    </style>
+</head>
+<body>
+    <!-- Etiquetas semanticas fundamentales: Toda web debe tener las siguientes a modo de mapa o esqueleto
+     
+        1. <header>     Contenedor superior situado en la cabecera
+        2. <nav>        Contenedor para la navegacion en la pagina
+        3. <main>       Contenedor para el contenido principal de la pagina
+        4. <section>    Secciones o divisiones del contenido principal
+        5. <footer>     Pie de pagina, engloba todo lo de la parte inferior de la web
+    -->
+
+
+    <!-- Cabecera -->
+    <header>
+
+        <!-- Logo cabecera -->
+        <div class="header-logo">
+            <img src="https://www.gstatic.com/marketing-cms/assets/images/f5/d3/a7f9db7045429cb6dc6be56bdcbe/google-logo-about.svg" alt="Logo google header">
+        </div>
+
+
+        <!-- Navegacion de la cabecera -->
+        <nav class="header-nav">
+
+            <ul>
+
+                <li>
+                    <a href="https://about.google/intl/es_ALL/">Acerca de</a>
+                </li>
+
+                <li>
+                    <a href="https://about.google/intl/es_ALL/products/">Productos</a>
+                </li>
+
+                <li>
+                    <a href="https://about.google/intl/es_ALL/company-info/">Sobre la empresa</a>
+                </li>
+
+                <li>
+                    <a href="https://blog.google/?utm_source=about.google&utm_medium=referral&utm_campaign=navigation">Noticias</a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </header>
+
+
+    <!-- Contenido principal -->
+    <main>
+
+        <!-- Seccion principal portada -->
+        <section class="portada">
+
+            <div>
+                <h1>Todo lo que anunciamos en Made by Google</h1>
+                <p class="p-gris">Conoce a los nuevos miembros de la familia Pixel</p>
+
+                <div class="portada-img">
+                    <button class="btn-primario">Comenzar</button>
+                </div>
+            </div>
+
+            <video id="portada-video" src="https://www.gstatic.com/marketing-cms/d9/09/5d785c164c0b8e0f1756ed51a156/about-1250-hardwaredurabilityandsustainability-pt01-v30.mp4" muted autoplay loop></video>
+        </section>
+
+
+    </main>
+
+</body>
+</html>
