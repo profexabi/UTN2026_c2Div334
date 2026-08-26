@@ -1,5 +1,18 @@
 # UTN 2026 c2 Div 334
 
+## Recursos para la cursada
+#### React
+- [React de cero a experto / Fernando Herrera](https://www.youtube.com/watch?v=oTGnOosMGS0&list=PLCKuOXG0bPi3x4cAt07EElVqk74hWb9ak)
+- [Curso fullstack open / Universidad de Helsinki](https://fullstackopen.com/en/)
+
+
+#### Angular
+- [Angular moderno de cero de experto / Fernando Herrera](https://www.youtube.com/watch?v=9eK45JJa8dY&list=PLCKuOXG0bPi3cfoQcSTaGUnqZbzLA30Hi)
+
+#### [Cursos (gratuitos) de Midudev](https://midu.dev/cursos)
+
+---
+
 ## Practicar con Git
 - Instalar [Git Bash](https://git-scm.com/install/windows)
 - Repasar para las próximas clases los [apuntes de Git](https://drive.google.com/drive/u/1/folders/1T1LEYs_H-NACabUJcdTXjodw8il6ZDsf)
@@ -41,6 +54,15 @@
 ---
 
 # Cronograma clases
+
+## Clase 3
+- HTML Forms
+- CSS hasta backgrounds
+- Practica sugerida, empiecen a estilar su pagina de recetas con bordes, imagenes de fondo, colores de fondo y colores de fuente. Tambien con fuentes con font family
+- Idealmente practiquen con el devtools y empiecen a estilar primero ahi
+
+
+---
 
 ## Clase 2
 - Desde Elementos en bloque y en linea hasta HTML Forms

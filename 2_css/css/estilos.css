@@ -1,0 +1,35 @@
+/* Gracias a la ,
+le damos un mismo estilo a distintos selectores */
+.ciudades, .ciudades-container {
+    /* Curvatura del borde */
+    border-radius: 10px;
+
+}
+
+.ciudades {
+    border: 2px solid purple;
+    /* ancho */
+    /* width: 400px; */
+
+    color: white;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    text-align: center;
+
+    margin: 10px;
+}
+
+.ciudades-container {
+    /* Color del borde del contenedor */
+    border: 2px solid green;
+
+    /* Color de fondo */
+    /* background-color: lightseagreen; */
+
+    /* Imagen de fondo */
+    background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fec%2F87%2F84%2Fec8784dca04f43ab070fd10490a5b2ab.jpg&f=1&nofb=1&ipt=a5343d230f53447f2610efbca38b95a308a877b5888efe3931ebefbd994279d7");
+
+    background-repeat: no-repeat;
+    background-size: cover;
+}

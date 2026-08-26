@@ -11,7 +11,7 @@ h1 {
 
 /* Seleccionamos la etiqueta div para darle un estilo a TODOS los div de la pagina */
 div {
-    border: 2px solid;
+    /* border: 2px solid; */
     margin-bottom: 15px;
 }
 

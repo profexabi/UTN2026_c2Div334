@@ -14,7 +14,7 @@
 
         <!-- Todo lo que esta adentro de style es codigo CSS -->
         <style>
-
+            /* Aca iran mis estilos si no los escribo en un archivo aparte como pasa abajo */
 
 
         </style>
@@ -26,6 +26,27 @@
 
     <!-- Informacion visible (cuerpo de la pagina) -->
      <body>
+
+        <h2>Formulario basico de HTML</h2>
+        <form id="formPrueba" class="misForms">
+
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email">
+            </div>
+
+            <div>
+                <label for="password">Contraseña:</label>
+                <input type="password" name="password" id="password">
+            </div>
+
+            <div>
+                <input type="submit" value="Enviar">
+            </div>
+
+        </form>
+
+        <hr>
 
         <!-- Contenedores simples (div) de ciudades -->
         <div class="ciudades" id="cordoba">
@@ -100,5 +121,43 @@
         <img width="200" src="https://www.deguitarra.online/wp-content/uploads/2021/07/abbey.jpg" alt="Foto de Divididos">
 
 
-     </body>
+    <!-- Pequeño adelanto de JavaScript -->
+    <script>
+        // Muestro un mensaje por consola
+        console.log("Hola mundo desde JavaScript en la consola del navegador");
+
+        // Selecciono un elemento a partir de su id
+        const miFormulario = document.getElementById("formPrueba");
+        console.log(miFormulario); 
+        /*
+            <form id="formPrueba" class="misForms">
+
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email">
+                </div>
+
+                <div>
+                    <label for="password">Contraseña:</label>
+                    <input type="password" name="password" id="password">
+                </div>
+
+                <div>
+                    <input type="submit" value="Enviar">
+                </div>
+
+            </form>
+        */
+
+        // Detecto el evento "enviar" y evito que se envie por defecto
+        miFormulario.addEventListener("submit", (event) => {
+            event.preventDefault();
+            console.log("Formulario detenido por JavaScript");
+        });
+
+        // Los tipos de funciones en JS los vemos en JavaScript III
+        // Los callbacks (funciones dentro de otras funciones) los vemos en JavaScript VII
+        // Mas adelante en la cursada veremos como con la api Fetch podremos enviar estos datos a un servidor (que por supuesto construiremos mas adelante)
+    </script>
+    </body>
 </html>

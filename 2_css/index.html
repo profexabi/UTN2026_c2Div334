@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen CSS</title>
+
+    <!-- CSS Interno / Internal CSS -->
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        /* Ejemplo de jerarquias en CSS (de menor a mayor)
+
+            1. etiqueta
+            2. clase
+            3. id
+            
+            ---
+            (a partir de aca)
+            
+            4. inline css
+            5. !important
+        */
+        section {
+            /* Color de fuente */
+            /* color: purple; */
+        }
+        /*
+        .ciudades {
+            color: blue;
+        }
+
+        #cordoba {
+            /* Por culpa del CSS inline, no me agarra aqua y tengo que hacer el apaño asi nomas del !important para que sobreescriba todo lo demas 
+            color: aqua;
+            color: pink !important;
+        }
+        */
+    </style>
+
+    <!-- CSS externo / External CSS (por defecto)  -->
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+
+    <header>
+        <nav></nav>
+    </header>
+
+    <main>
+
+        <section class="ciudades-container">
+
+            <!-- CSS en linea / Inline CSS
+             sobreescribe todos los demas estilos -->
+            <div class="ciudades" id="cordoba" style="color: green;">
+                <h2>Cordoba</h2>
+                <p>Provincia del fernet con coca, el vino prittyado, la Mona Jimenez y el cuarteto</p>
+            </div>
+
+            <div class="ciudades" id="rosario">
+                <h2>Rosario</h2>
+                <p>Cuna de Messi, del fideo y Colapinto. Tiene el famoso monumento a la bandera y siempre estuvo cerca</p>
+            </div>
+
+            <div class="ciudades" id="tandil">
+                <h2>Tandil</h2>
+                <p>Terribles embutidos, los mejores salames y lugar de las sierras y de Del Potro</p>
+            </div>
+
+            <div class="ciudades">
+                <h2>Lanus</h2>
+                <p>Ciudad de D10S. Recomendable ir al Parque Eva Peron y al velodromo, ademas de la estatua del Laucha Acosta</p>
+            </div>
+
+            <div class="ciudades">
+                <h2>La Rioja</h2>
+                <p>La ciudad de las aceitunas y el aceite de oliva</p>
+            </div>
+
+        </section>
+
+        <section>
+            <div>
+                <h2>La Boca</h2>
+                <p>Barrio bostero por excelencia, hogar de Quinquela Martin</p>
+            </div>
+
+            <div>
+                <h2>Boedo</h2>
+                <p>Barrio tanguero y del mas grande de los clubes, el ciclon</p>
+            </div>
+
+            <div>
+                <h2>Parque Patricios</h2>
+                <p>Abriguense el pecho, aca boxeo tambien Ringo Bonavena</p>
+            </div>
+        </section>
+    </main>
+    
+    <footer></footer>
+</body>
+</html>
