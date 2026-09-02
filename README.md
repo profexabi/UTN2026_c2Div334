@@ -3,6 +3,14 @@
 
 # Cronograma clases
 
+## Clase 5 Prox clase
+- CSS Flex
+- Media Queries
+- Continuar desde [CSS Tables](https://www.w3schools.com/css/css_table.asp)
+
+## Clase 4
+- CSS pseudoclases, combinadores, uds absolutas y relativas, practica
+
 ## Clase 3
 - HTML Forms
 - CSS hasta backgrounds
