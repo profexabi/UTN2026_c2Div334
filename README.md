@@ -1,15 +1,65 @@
 # UTN 2026 c2 Div 334
+---
+
+# Cronograma clases
+
+## Clase 3
+- HTML Forms
+- CSS hasta backgrounds
+- Practica sugerida, empiecen a estilar su pagina de recetas con bordes, imagenes de fondo, colores de fondo y colores de fuente. Tambien con fuentes con font family
+- Idealmente practiquen con el devtools y empiecen a estilar primero ahi
+
+
+---
+
+## Clase 2
+- Desde Elementos en bloque y en linea hasta HTML Forms
+- [Clases, Ids](https://www.w3schools.com/html/html_classes.asp)
+- [Divs y etiquetas semanticas](https://www.w3schools.com/html/html_div.asp)
+- Prox clase vamos a ver HTML Forms y saltar a CSS
+
+## Clase 1
+- HTML hasta [Elementos en Bloque y Elementos en Linea](https://www.w3schools.com/html/html_blocks.asp)
+- **Recordatorio: TODAS las etiquetas en linea iran siempre dentro de etiquetas en bloque. [Leccion W3 Schools](https://www.w3schools.com/html/html_formatting.asp)**
+- Practica sugerida
+    - Hacer una receta de su plato favorito usando las etiquetas HTML que vimos en clase
+    - [Ej de receta](https://comedera.com/receta-de-chipa-pan-paraguayo/)
+
+- Repasar Git
+
+- Proxima clase, repasar dudas hasta elementos en bloque y en linea.
+- Continuamos desde HTML tables, listas y contenedores
+
+---
+
+## Apuntes
+- [Que es el DOM?](https://www.w3schools.com/whatis/whatis_htmldom.asp)
+
+---
 
 ## Recursos para la cursada
-#### React
+### Markdown
+- [Sintaxis del lenguaje markdown](https://www.markdownguide.org/basic-syntax/)
+- [Editor online de markdown](https://dillinger.io/)
+
+---
+
+### React
 - [React de cero a experto / Fernando Herrera](https://www.youtube.com/watch?v=oTGnOosMGS0&list=PLCKuOXG0bPi3x4cAt07EElVqk74hWb9ak)
 - [Curso fullstack open / Universidad de Helsinki](https://fullstackopen.com/en/)
 
+<hr>
 
-#### Angular
+### Angular
 - [Angular moderno de cero de experto / Fernando Herrera](https://www.youtube.com/watch?v=9eK45JJa8dY&list=PLCKuOXG0bPi3cfoQcSTaGUnqZbzLA30Hi)
 
 #### [Cursos (gratuitos) de Midudev](https://midu.dev/cursos)
+
+---
+
+## Cursos de formacion para agregar certificados
+- [Fundacion YPF](https://lab.fundacionypf.org/formacion-digital)
+- [Santander Open Academy](https://app.santanderopenacademy.com/es/program/programa-full-stack-developer-itba-2026)
 
 ---
 
@@ -50,34 +100,3 @@
     # Ya con los cambios registrados, enviamos este codigo a nuestro repo
     git push origin main
     ```
-
----
-
-# Cronograma clases
-
-## Clase 3
-- HTML Forms
-- CSS hasta backgrounds
-- Practica sugerida, empiecen a estilar su pagina de recetas con bordes, imagenes de fondo, colores de fondo y colores de fuente. Tambien con fuentes con font family
-- Idealmente practiquen con el devtools y empiecen a estilar primero ahi
-
-
----
-
-## Clase 2
-- Desde Elementos en bloque y en linea hasta HTML Forms
-- [Clases, Ids](https://www.w3schools.com/html/html_classes.asp)
-- [Divs y etiquetas semanticas](https://www.w3schools.com/html/html_div.asp)
-- Prox clase vamos a ver HTML Forms y saltar a CSS
-
-## Clase 1
-- HTML hasta [Elementos en Bloque y Elementos en Linea](https://www.w3schools.com/html/html_blocks.asp)
-- **Recordatorio: TODAS las etiquetas en linea iran siempre dentro de etiquetas en bloque. [Leccion W3 Schools](https://www.w3schools.com/html/html_formatting.asp)**
-- Practica sugerida
-    - Hacer una receta de su plato favorito usando las etiquetas HTML que vimos en clase
-    - [Ej de receta](https://comedera.com/receta-de-chipa-pan-paraguayo/)
-
-- Repasar Git
-
-- Proxima clase, repasar dudas hasta elementos en bloque y en linea.
-- Continuamos desde HTML tables, listas y contenedores

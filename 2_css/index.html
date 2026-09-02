@@ -47,9 +47,91 @@
 
 <body>
 
+
     <header>
-        <nav></nav>
+        <!-- 
+        <img src="https://imgs.search.brave.com/ECshUCBd2O8qfZERCInCLiFqZRxz2uorm8w3RzfSCsE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/YnJhbmRldnMuY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDIz/LzA5L0ltYWdlbmVz/LVdlYnAtZm9ybWF0/by1xdWUtbWVqb3Jh/LWxhLWNhcmdhLXkt/ZWwtU0VPLndlYnA" alt="">
+        -->
+        <div class="header-container">
+            <h1>Mi super portfolio dev!! Fah!!!</h1>
+        </div>
     </header>
+
+
+
+    <!-- Muestra de combinadores -->
+
+    <!-- Combinador de hijo directo
+        /* Apunto a TODOS los parrafos dentro de un div */
+        div p {
+            color: blue;
+        } 
+        <div class="contenedor-combinadores">
+            
+            <p>Este parrafo sera azul (Este parrafo es descendiente directo (hijo inmediato))</p>
+            
+            <section>
+                <p>Este tambien sera azul ya que es descendiente (no directo) del div</p>
+            </section>
+            
+        </div>
+    -->
+
+    <!-- 
+    <div class="contenedor-combinadores">
+            
+        <p>Este parrafo sera rojo</p>
+        
+        <section>
+            <p>Este parrafo no sera del rojo, ya que es descendiente, pero NO hijo directo</p>
+        </section>
+        
+    </div>
+
+    -->
+
+    <!-- Combinador de hermano inmediato 
+    <h1>Titulo</h1>
+    <p>Este parrafo sera verde porque es el hermano adyacente (inmediato) del h1</p>
+    <p>Este parrafo NO sera verde</p>
+    -->
+    
+    <!-- Combinador de hermano general -->
+    <h1>Titulo</h1>
+    <p>Este parrafo sera morado porque es hermano del h1</p>
+    <p>Este tambien sera morado</p>
+
+    <hr>
+
+
+    <!-- Muestra de enlaces y pseudoclases -->
+    <div>
+
+        <h2>Enlaces y pseudoclases</h2>
+        
+        <ul class="muestra-enlaces">
+        
+            <li id="enlace1">
+                <a href="https://www.w3schools.com/css/css_link.asp">Enlace 1</a>
+            </li>
+
+            <li id="enlace2">
+                <a href="https://www.w3schools.com/css/">Enlace 2</a>
+            </li>
+
+            <li id="enlace3">
+                <a href="https://www.w3schools.com/html">Enlace 3</a>
+            </li>
+
+            <li id="enlace4">
+                <a href="https://www.eldiarioar.com/">Enlace 4</a>
+            </li>
+        
+        </ul>
+    </div>
+
+    <hr>
+
 
     <main>
 

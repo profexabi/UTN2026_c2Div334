@@ -33,3 +33,130 @@ le damos un mismo estilo a distintos selectores */
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+
+/* Muestra enlaces */
+.muestra-enlaces {
+    border: 2px solid;
+    /* Definimos las dimensiones del contenedor padre */
+    width: 500px;
+    height: 250px;
+}
+
+.muestra-enlaces li {
+    padding: 5px;
+    border: 2px solid;
+}
+
+/* pseudoclase hover, se activa al pasar el cursor sobre un elemento */
+#enlace1:hover {
+    background-color: #551a8b;
+}
+
+#enlace1 a:hover {
+    color: white;
+}
+
+/* pseudoclase active, se aplica cuando el usuario esta haciendo click en un elemento como un boton o enlace */
+#enlace2 a:active{
+    color: white;
+    background-color: #0303ee;
+}
+
+/* pseudoclase visited */
+#enlace4 a:visited {
+    color: green;
+}
+
+
+/* Combinadores CSS */
+.contenedor-combinadores {
+    border: 2px solid purple;
+    padding: 20px;
+}
+
+/* Combinador de hijo descendiente:
+Apunto a todos los parrafos dentro de un div 
+div p {
+    color: blue;
+}
+*/
+
+/* Combinador de hijo directo (solo los parrafos hijos directos de un div) 
+div > p {
+    color: red;
+}
+*/
+
+/* Combinador de hermano adyacente
+h1 + p {
+    color: green;
+}
+*/
+
+/* Combinador de hermano general */
+h1 ~ p {
+    color: purple;
+}
+
+
+/* Unidades relativas */ 
+
+/* Agregamos una fuente descargada */
+@font-face {
+    font-family: "pixeboy";
+    src: url("../fonts/pixeboy-font/Pixeboy-z8XGD.ttf");
+}
+
+body {
+    margin: 0;
+}
+
+header {
+    background-image: url("https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3ByZ3VvOHY2dHMzazRqbDVpa3E0YmxvcXV5Y3IzbWdkYjM5eWV0ZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/5jT0jaNDsM6Ik7X9yq/giphy.gif");
+    height: 100vh; /* Fundamental revisar el box model, paddings, bordes y margins */
+    border: 1px transparent;
+}
+
+.header-container {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    font-size: 6rem;
+    font-family: "pixeboy";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+
+/* Recomendaciones para separar y organizar la logica de nuestros estilos */
+
+/*=======================
+    Estilos generales
+=======================*/
+
+
+
+
+
+/*=======================
+    Header
+=======================*/
+
+
+
+
+
+/*=======================
+    Footer
+=======================*/
+
+
+
+
+/*=======================
+    Media queries
+=======================*/
+
