@@ -3,19 +3,10 @@
 
 # Cronograma clases
 
-## Clase 5 Prox clase
-- CSS Flex
+## Prox clase
+- Ver muestras de maquetacion
 - Media Queries
-- Continuar desde [CSS Tables](https://www.w3schools.com/css/css_table.asp)
-
-## Clase 4
-- CSS pseudoclases, combinadores, uds absolutas y relativas, practica
-
-## Clase 3
-- HTML Forms
-- CSS hasta backgrounds
-- Practica sugerida, empiecen a estilar su pagina de recetas con bordes, imagenes de fondo, colores de fondo y colores de fuente. Tambien con fuentes con font family
-- Idealmente practiquen con el devtools y empiecen a estilar primero ahi
+- Continuar desde [CSS Display](https://www.w3schools.com/css/css_table.asp)
 
 
 ---

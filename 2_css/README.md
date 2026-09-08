@@ -31,6 +31,15 @@
 
 ---
 
+## Posicionamiento con flexbox
+- [Guia de Flexbox de csstricks](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
+- [Juego de flex froggy](https://flexboxfroggy.com/#es)
+
+#### Alternativo
+- [Juego de Grid Garden](https://cssgridgarden.com/#es)
+
+---
+
 ## Unidades absolutas y relativas
 Las unidades de medida en CSS se utilizan para definir el tamaño, espacio, márgenes, bordes, fuentes y otros aspectos visuales de los elementos. 
 Estas unidades pueden ser absolutas o relativas dependiendo de si su tamaño es fijo o si se ajusta en funcion de otros factores como el tamaño de ventana o del elemento padre
