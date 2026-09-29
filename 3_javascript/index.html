@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript 334</title>
+
+    <!-- CSS Externo -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        /* Estilado CSS interno */
+    </style>
+
+    <!-- Forma mas moderna de cargar el archivo de JavaScript 
+        - El atributo defer se encarga de que el script se descargue en paralelo con HTML 
+        - Pero JavaScript solo se ejecutara despues de que toda la pagina termine de cargarse
+        - Asi evitamos el bloqueo de renderizado y aseguramos que todo el documento este cargado antes de ejecutar el script
+    -->
+    <script defer src="js/index.js"></script>
+</head>
+<body>
+    <h1>Introduccion a JavaScript</h1>
+
+    <!-- El lugar tradicional del script de JS es antes del </body> 
+     
+    <script src="js/index.js"></script>
+
+    Tambien podemos cargar el JavaScript directamente adentro de <script>
+    -->
+</body>
+</html>
