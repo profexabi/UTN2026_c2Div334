@@ -1,5 +1,8 @@
 # UTN 2026 c2 Div 334
+
 ---
+
+# Fecha 1er parcial, *a charlar desde el 19/20 oct*
 
 # Cronograma clases
 

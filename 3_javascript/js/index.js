@@ -1,81 +1,146 @@
-/*====================
-    Scope / Ambito
-======================
+/*======================
+    Arrays en JS
+========================
 
-El scope, alcance o ambito se refiere al contexto en el cual las variables y las funciones son accesibles y pueden ser referenciadas.
-
-Entender el scope es clave para que podamos escribir codigo claro y sin errores, tenemos distintos tipos de scope en JavaScript
-
-
-    1. Global Scope o Ambito Global:
-        - Las variables declaradas FUERA de cualquier funcion o bloque {} tienen alcance global y son accesibles desde cualquier parte del codigo. Esto incluye a var, let y const
-        - En el caso de las viejas variables var, estas variables se adjuntan al objeto global window, pudiendo ser accesibles desde la consola
-
-
-    2. Local Scope / Function Scope (Ambito local / Ambito de funcion)
-        - Las variables declaradas DENTRO DE UNA FUNCION, solo son acesibles dentro de esa funcion
-
-
-    3. Block Scope (Ambito de bloque)
-        - A partir de ES6, las nuevas variables let y const tienen alcance de bloque
-        - Esto significa que estas variables SOLO son accesible DENTRO DEL BLOQUE -> {}
-        - Esto afecta a las llaves de un if, un for, etc {}
+Un array es una lista ordenada de elementos donde cada uno tiene una posicion o indice.
+Los arrays en JS son muy flexibles: pueden contener cualquier tipo de datos (numeros, cadenas, booleanos, otros arrays, objetos, funciones, etc) y los elementos no tienen por que ser del mismo tipo
 */
 
-// Ejemplo global scope
-let variableGlobal = "Soy una variable global";
-
-function mostrarGlobal() {
-    console.log(variableGlobal);
-}
-
-mostrarGlobal(); // Soy una variable global
-console.log(variableGlobal); // Soy una variable global
+let colores = ["azul", "verde", "rojo"];
+console.log(colores[0]); // azul
+console.log(colores[2]); // rojo
 
 
-// Ejemplo de Local scope
-function mostrarLocal() {
-    var localVar = "Soy una variable local";
-    console.log(localVar);
-}
+/*======================
+    Objetos en JS
+========================
 
-mostrarLocal(); // Soy una variable local
-// console.log(localVar); // Uncaught ReferenceError: localVar is not defined
+Un objeto en JavaScript es una coleccion de pares clave-valor
+Las claves son strings que identifican a cada valor, lo cual permite un acceso rapido y estructurado a los datos.
+*/
+
+let persona = {
+    nombre: "Nico",
+    edad: 30,
+    ciudad: "Berazategui"
+};
+
+// Podemos acceder a las propiedades de un objeto mediante la notacion de punto y de corchete
+// Notacion de punto
+console.log(persona.nombre); // Nico
+
+// Notacion de corchete
+console.log(persona["ciudad"]); // Berazategui
+
+// Agregamos una propiedad
+persona.pais = "Argentina";
+
+// Eliminamos una propiedad
+delete persona.edad;
+
+console.log(persona); // {nombre: 'Nico', ciudad: 'Berazategui', pais: 'Argentina'}
 
 
-// Ejemplo de block scope
-if (true) {
-    let bloqueLet = "Soy una let de bloque";
-    console.log(bloqueLet);
-}
-
-// console.log(bloqueLet); // Uncaught ReferenceError: bloqueLet is not defined
-
-
-// Function scope: Las variables declaradas con var tienen ambito de funcion. Esto significa que si se declarar dentro de una funcion NO son accesibles fuera de esa funcion, pero no estan limitadas por bloques
-
-// Block scope: Las variables declaradas con let y const estan limitadas por el bloque en que se declaran
-
-function scopeFunction() {
-    if (true) {
-        var funcionVar = "Soy una var de funcion";
+// Metodos de objetos: Los objetos tambien pueden tener metodos, que son funciones almacenadas en una propiedad
+let perro = {
+    nombre: "Batata",
+    ladrar: function() {
+        console.log("Guau!");
     }
-    console.log(funcionVar);
-}
+};
 
-scopeFunction(); // Soy una var de funcion
+perro.ladrar(); // Guau!
 
 
-function scopeBloque() {
-    if (true) {
-        let bloqueLet = "Soy una let de bloque";
-        const bloqueConst = "Soy una const de bloque";
+/*===============================
+    Metodos de strings en JS
+===============================*/
 
-        console.log(`Probando el bloqueLet: \n${bloqueLet}`);
-    }
+// 1. length: Devuelve la longitud de un string
+console.log("Hola".length); // 4
 
-    // console.log(bloqueLet); // Uncaught ReferenceError: bloqueLet is not defined
-    // console.log(bloqueConst); // Uncaught ReferenceError: bloqueConst is not defined
-}
+// 2. charAt(index): Devuelve el caracter en la posicion especificada
+console.log("Hola".charAt(2)); // l
 
-scopeBloque();
+// 3. concat(str1, str2): Concatena strings
+console.log("Hola".concat(" ", "mundo!")); //Hola mundo!
+
+// 4. includes(substring): Devuelve true si el substring esta en el string
+console.log("JavaScript".includes("Script")); // true (es case sensitive)
+
+// 5.   startsWith: Comprueba si el string comienza con el substring
+//      endsWith: Comprueba si el string termina con el substring
+console.log("Hola mundo".startsWith("Hola")); // true
+
+// 6.   indexOf(substring): Devuelve el indice de la PRIMERA aparicion del substring
+//      lastIndexOf(substring): Devuelve la ULTIMA aparicion del substring
+console.log("banana".indexOf("a")); // 1
+console.log("banana".lastIndexOf("a")); // 5
+
+// 7. replace(searchValue, newValue): Reemplaza una parte del string
+console.log("Hola mundo".replace("mundo", "Div 334")); // Hola Div 334
+
+// 8. replaceAll(searchValue, newValue): Reemplaza TODAS las apariciones
+console.log("1, 2, 3, 4, 5".replaceAll(", ", ";")); // 1;2;3;4;5
+
+// 9.   toLowerCase(): Convierte a minusculas
+//      toUpperCase(): Convierte a mayusculas
+console.log("AGUANTE SAN LORENZO".toLowerCase()); // aguante san lorenzo
+console.log("hola profe, disculpe soy muy timido".toUpperCase()); // HOLA PROFE, DISCULPE SOY MUY TIMIDO
+
+// 10.  trim(): Elimina espacios en blanco al inicio y al final
+//      trimStart(): Elimina espacios al principio
+//      trimEnd(): Elimina espacios al final
+console.log("      Hola   ".trim()); // 
+
+// 11. slice(start, end): Extrae parte del string
+console.log("JavaScript".slice(0, 4)); // Java
+console.log("JavaScript".slice(-6)); // Script
+
+// 12. substring(start, end): Similar a slice pero no acepta negativos
+console.log("JavaScript".substring(4, 10)); // Script
+
+// 13. split(separator): Divide el string en un array
+console.log("Hola".split("")); // ['H', 'o', 'l', 'a']
+console.log("rojo, verde, azul".split(", ")); // ['rojo', 'verde', 'azul']
+
+// 14. repeat(count): Repite el string
+console.log("ji".repeat(3)); // jijiji
+
+// 15. match(regex): Devuelve coincidencias con una expresion regular
+console.log("abc123".match(/\d+/g)); // ['123']
+
+
+
+/*===============================
+    Metodos de arrays en JS
+===============================*/
+
+// 1. length: Devuelve la longitud del array
+console.log([1, 2, 3, 4, 5].length); // 5
+
+// 2. push(element): AGREGA un elemento al FINAL del array
+let arr = [1, 2];
+arr.push(3);
+console.log(arr); // [1, 2, 3]
+
+// 3. pop(): ELIMINA el ultimo elemento del array y lo devuelve
+arr.pop();
+console.log(arr); // [1, 2]
+// console.log(arr.pop()); // 3
+
+// 4. unshift(element): AGREGA un elemento al INICIO del array
+arr.unshift(0);
+console.log(arr); // [0, 1, 2]
+
+// 5. shift(): ELIMINA el primer elemento y lo devuelve
+console.log(arr.shift()); // 0
+
+// 6. concat(array): Concatena arrays
+console.log([1, 2, 3, 4, 5].concat([6, 7, 8, 9, 10])); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+// 7. join(separator): Une los elementos en un string
+console.log([1, 2, 3, 4, 5].join("-")); // 1-2-3-4-5
+
+// TODO 
+// slice, splice, indexOf, lastIndexOf, includes
