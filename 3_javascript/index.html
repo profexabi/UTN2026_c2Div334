@@ -20,7 +20,33 @@
     <script defer src="js/index.js"></script>
 </head>
 <body>
-    <h1>Introduccion a JavaScript</h1>
+    <h1 id="titulo">Introduccion a JavaScript</h1>
+
+    <p class="mensaje">Primer parrafo</p>
+    <p class="mensaje">Segundo parrafo</p>
+
+    <button id="boton">Hace click maquina</button>
+
+    <form class="borde">
+        <input type="text" name="escribir" id="escribir">
+    </form>
+
+    <!-- Comprendiendo la propagacion de eventos -->
+    <div id="padre" class="borde">
+        <button id="hijo">Boton</button>
+    </div>
+
+    <!-- Como detener el envio por defecto de los formularios HTML -->
+    <form class="borde" id="miFormulario">
+        <label for="fname">First name:</label><br>
+        <input type="text" id="fname" name="fname"><br>
+
+        <label for="lname">Last name:</label><br>
+        <input type="text" id="lname" name="lname"><br><br>
+
+        <input type="submit" value="Submit">
+    </form> 
+      
 
     <!-- El lugar tradicional del script de JS es antes del </body> 
      

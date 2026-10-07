@@ -2,15 +2,13 @@
 
 ---
 
-# Fecha 1er parcial, *a charlar desde el 19/20 oct*
+## Fecha 1er parcial / *20/10 modalidad tp asincrono*
 
 # Cronograma clases
 
 ## Prox clase
-- Ver muestras de maquetacion
-- Media Queries
-- Continuar desde [CSS Display](https://www.w3schools.com/css/css_table.asp)
-
+- EXTRA / Ver estructuras de datos mas complejas
+- EXTRA / Iteracion de objetos
 
 ---
 

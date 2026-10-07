@@ -1,146 +1,206 @@
-/*======================
-    Arrays en JS
-========================
+/*=======================
+    Callbacks
+=========================
 
-Un array es una lista ordenada de elementos donde cada uno tiene una posicion o indice.
-Los arrays en JS son muy flexibles: pueden contener cualquier tipo de datos (numeros, cadenas, booleanos, otros arrays, objetos, funciones, etc) y los elementos no tienen por que ser del mismo tipo
+Los callbacks son funciones que se pasan como argumentos a otras funciones y se ejecutan despues de que ocurra algun evento o se complete alguna operacion*/
+
+// Ejemplo basico de callback
+function saludar(nombre, callback) {
+    console.log(`Hola ${nombre}`);
+    callback(); // Se ejecuta el callback
+}
+
+function despedirse() {
+    console.log("Nos vemos!");
+}
+
+saludar("Esteban", despedirse);
+// Hola Esteban
+// Nos vemos!
+
+// Ejemplo de callback con un temporizador
+/*
+setTimeout(() => {
+    console.log("Esto se ejecuta en 2 segundos")
+}, 2000);
 */
 
-let colores = ["azul", "verde", "rojo"];
-console.log(colores[0]); // azul
-console.log(colores[2]); // rojo
 
+/*=========================================
+    Funciones como First Class Citizens
+===========================================
 
-/*======================
-    Objetos en JS
-========================
+Por que es que esto se produce? 
+En JavaScript, las funciones son "ciudadanas de primer clase", es decir, tiene prioridad y pueden ser
 
-Un objeto en JavaScript es una coleccion de pares clave-valor
-Las claves son strings que identifican a cada valor, lo cual permite un acceso rapido y estructurado a los datos.
+    - Asignadas a variables
+    - Pasadas como argumentos
+    - Retornadas desde otras funciones
 */
 
-let persona = {
-    nombre: "Nico",
-    edad: 30,
-    ciudad: "Berazategui"
-};
 
-// Podemos acceder a las propiedades de un objeto mediante la notacion de punto y de corchete
-// Notacion de punto
-console.log(persona.nombre); // Nico
+/////////////////////
+// Asignar funcion a una variable
+const miCallback = function() {
+    console.log("Callback ejecutado");
+}
 
-// Notacion de corchete
-console.log(persona["ciudad"]); // Berazategui
+// Pasamos esta funcion como argumento a otra funcion
+function ejecutarCallback(callback) {
+    callback(); // Aca invocamos a la funcion que pasamos por parametro
+}
 
-// Agregamos una propiedad
-persona.pais = "Argentina";
-
-// Eliminamos una propiedad
-delete persona.edad;
-
-console.log(persona); // {nombre: 'Nico', ciudad: 'Berazategui', pais: 'Argentina'}
+ejecutarCallback(miCallback); // Callback ejecutado
 
 
-// Metodos de objetos: Los objetos tambien pueden tener metodos, que son funciones almacenadas en una propiedad
-let perro = {
-    nombre: "Batata",
-    ladrar: function() {
-        console.log("Guau!");
+/////////////////////
+// Sincronia vs Asincronia
+
+// Callback sincrono
+function procesoPesado(callback) {
+    console.log("Iniciando proceso pesado...");
+
+    // Simulamos un procesamiento que tarde unos segundos
+    for (let i = 0; i < 5000; i++) {
+        console.log("<- Vueltas de iteracion");
     }
-};
 
-perro.ladrar(); // Guau!
+    // Cuando termine este proceso pesado de arriba, llamara a la funcion
+    callback(); // Aca imprimira "Proceso completado"
+}
 
+/*
+procesoPesado(function() {
+    console.log("Proceso completado");
+});
+*/
 
-/*===============================
-    Metodos de strings en JS
-===============================*/
-
-// 1. length: Devuelve la longitud de un string
-console.log("Hola".length); // 4
-
-// 2. charAt(index): Devuelve el caracter en la posicion especificada
-console.log("Hola".charAt(2)); // l
-
-// 3. concat(str1, str2): Concatena strings
-console.log("Hola".concat(" ", "mundo!")); //Hola mundo!
-
-// 4. includes(substring): Devuelve true si el substring esta en el string
-console.log("JavaScript".includes("Script")); // true (es case sensitive)
-
-// 5.   startsWith: Comprueba si el string comienza con el substring
-//      endsWith: Comprueba si el string termina con el substring
-console.log("Hola mundo".startsWith("Hola")); // true
-
-// 6.   indexOf(substring): Devuelve el indice de la PRIMERA aparicion del substring
-//      lastIndexOf(substring): Devuelve la ULTIMA aparicion del substring
-console.log("banana".indexOf("a")); // 1
-console.log("banana".lastIndexOf("a")); // 5
-
-// 7. replace(searchValue, newValue): Reemplaza una parte del string
-console.log("Hola mundo".replace("mundo", "Div 334")); // Hola Div 334
-
-// 8. replaceAll(searchValue, newValue): Reemplaza TODAS las apariciones
-console.log("1, 2, 3, 4, 5".replaceAll(", ", ";")); // 1;2;3;4;5
-
-// 9.   toLowerCase(): Convierte a minusculas
-//      toUpperCase(): Convierte a mayusculas
-console.log("AGUANTE SAN LORENZO".toLowerCase()); // aguante san lorenzo
-console.log("hola profe, disculpe soy muy timido".toUpperCase()); // HOLA PROFE, DISCULPE SOY MUY TIMIDO
-
-// 10.  trim(): Elimina espacios en blanco al inicio y al final
-//      trimStart(): Elimina espacios al principio
-//      trimEnd(): Elimina espacios al final
-console.log("      Hola   ".trim()); // 
-
-// 11. slice(start, end): Extrae parte del string
-console.log("JavaScript".slice(0, 4)); // Java
-console.log("JavaScript".slice(-6)); // Script
-
-// 12. substring(start, end): Similar a slice pero no acepta negativos
-console.log("JavaScript".substring(4, 10)); // Script
-
-// 13. split(separator): Divide el string en un array
-console.log("Hola".split("")); // ['H', 'o', 'l', 'a']
-console.log("rojo, verde, azul".split(", ")); // ['rojo', 'verde', 'azul']
-
-// 14. repeat(count): Repite el string
-console.log("ji".repeat(3)); // jijiji
-
-// 15. match(regex): Devuelve coincidencias con una expresion regular
-console.log("abc123".match(/\d+/g)); // ['123']
+// Cuando ejecutamos el proceso pesado, JavaScript no permitira continuar ejecutando el codigo y mostrando este console.log() hasta que haya terminado el proceso pesado de arriba. Esto traba la ejecucion del codigo
+console.log("Esto se ejecuta despues del callback");
 
 
+////////////////////////
+// Callback asincronico
+function procesoAsincronico(callback) {
+    console.log("Iniciando proceso asincrono...");
 
-/*===============================
-    Metodos de arrays en JS
-===============================*/
+    // El temporizador como vimos arriba es una funcion asincrona, entonces no traba todo el flujo hasta que termine, corre en paralelo y no molesta
+    setTimeout(function() {
+        callback();
+    }, 2000);
+}
 
-// 1. length: Devuelve la longitud del array
-console.log([1, 2, 3, 4, 5].length); // 5
+procesoAsincronico(() => console.log("Proceso asincronico completado"));
 
-// 2. push(element): AGREGA un elemento al FINAL del array
-let arr = [1, 2];
-arr.push(3);
-console.log(arr); // [1, 2, 3]
+console.log("Fin del proceso asincronico");
 
-// 3. pop(): ELIMINA el ultimo elemento del array y lo devuelve
-arr.pop();
-console.log(arr); // [1, 2]
-// console.log(arr.pop()); // 3
+console.log("Continuamos con el codigo");
 
-// 4. unshift(element): AGREGA un elemento al INICIO del array
-arr.unshift(0);
-console.log(arr); // [0, 1, 2]
+// Aca sucede el proceso contrario, el codigo asincronico no se queda deteniendo todo 2 segundos, sino que corre en paralelo y el resto del codigo puede seguir ejecutandose sin problema
 
-// 5. shift(): ELIMINA el primer elemento y lo devuelve
-console.log(arr.shift()); // 0
+////////////////////////
+// Casos de usos comunes de callbacks:
 
-// 6. concat(array): Concatena arrays
-console.log([1, 2, 3, 4, 5].concat([6, 7, 8, 9, 10])); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+// 1. Temporizadores (Timers)
+setTimeout(() => console.log("Esto se ejecuta despues de 3 segundos"), 3000);
 
-// 7. join(separator): Une los elementos en un string
-console.log([1, 2, 3, 4, 5].join("-")); // 1-2-3-4-5
 
-// TODO 
-// slice, splice, indexOf, lastIndexOf, includes
+// 2. Eventos del DOM
+const boton = document.getElementById("boton");
+
+boton.addEventListener("click", event => console.log("Boton clickeado ", event.target));
+
+
+// 3. Operaciones con Arrays
+const numeros = [1, 2, 3, 4, 5];
+
+numeros.forEach(function(numero, indice) {
+    console.log(`Indice: ${indice}, valor: ${numero}`);
+});
+
+/*
+const duplicados = numeros.map(function(numero) {
+    return numero * 2;
+})
+    */
+
+const duplicados = numeros.map(num => num * 2);
+console.log(duplicados); // [2, 4, 6, 8, 10]
+
+
+// 4. Peticiones HTTP (mas adelante)
+
+
+// Lectura de archivos (Node.js tambien mas adelante)
+
+
+/*==========================
+    Ventajas y Desventajas
+============================
+
+Ventajas
+    - Simplicidad: Facil de entender para operaciones simples
+    - Universalidad: Compatibilidad con todos los navegadores
+    - Flexibilidad: Permiten crear codigo reutilizable
+
+Desventajas
+    - Callback Hell: Anidamiento excesivo que dificulta la lectura
+    - Manejo de errores: Complicado con calbacks anidados
+    - Flujo de control: Dificil de seguir con operaciones complejas
+
+
+////////////////////////////
+// Ejemplo de callback hell
+
+// https://imgur.com/BtjZedW
+
+function procesoCompleto(callback) {
+    paso1(function(error, resultado1) {
+        if (error) return callback(error);
+            paso2(resultado1, function(error, resultado2) {
+                if (error) return callback(error);
+                    paso3(resultado2, function(error, resultado3) {
+                    if (error) return callback(error);
+                        paso4(resultado3, function(error, resultadoFinal) {
+                            if (error) return callback(error);
+                                callback(null, resultadoFinal);
+                });
+            });
+        });
+    });
+}
+
+
+///////////////////////////
+// Alternativas modernas
+
+Para evitar el callback hell (anidamiento excesivo), se desarrollaron alternativas como
+    - Promesas: .then().catch()
+    - Async/Await: Sintaxis mas limpia y legible
+
+// Mismo ejemplo con async/await
+async function procesoCompleto() {
+    try {
+        const resultado1 = await paso1();
+        const resultado2 = await paso2(resultado1);
+        const resultado3 = await paso3(resultado2);
+        return resultadoFinal;
+    
+    } catch (error) {
+        console.error("Error: ", error);
+    }
+}
+
+
+Los callbacks son clave en JavaScript y se utilizan extensivamente para:
+
+    - Manejar eventos del usuario
+    - Operaciones asincronas
+    - Temporizadores
+    - Procesamiento de datos
+    - Comunicacion con servidores
+
+Aunque vayamos a usar promesas y async/await, entender los callbacks es fundamental para trabajar con JavaScript
+*/
+
+// TODO Callbacks vs High Order Functions, Destructuring, Spread Operator, Funciones anidadas, APIs en JavaScript y Web APIs

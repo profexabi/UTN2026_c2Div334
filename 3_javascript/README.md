@@ -1,7 +1,7 @@
 # JavaScript
 
 ### Prox clase
-- Continuar JavaScript III desde Hoisting
+#### [Columna de Emi Garzon sobre tecnologia](https://www.youtube.com/watch?v=Z3kXgVFaTVM)
 
 ---
 
@@ -22,13 +22,219 @@ Recién después ejecuta el código en orden.
 
 ---
 
+## JavaScript VII / Callbacks, High Order Functions, Destructuring, Spread Operator, funciones anidadas y web apis
+
+
+
+
+---
+
+
+## JavaScript VI / Manipulacion del DOM en JavaScript y Eventos
+
+### Que es el [DOM](https://www.w3schools.com/whatis/whatis_htmldom.asp)?
+El DOM HTML o Modelo de Objetos del Documento (Document Object Model) es una interfaz de programacion que representa un documento HTML como una estructura jerarquica de objetos, conocida comunmente como arbol DOM. Esta estructura permite a los programas acceder, modificar, añadir o eliminar elementos, contenido, estilos y atributos del documento de forma dinamica.
+
+Cada elemento HTML se convierte en un nodo dentro de este arbol y todos los elementos estan relacionados entre si mediante padres, hijos y hermanos, creando una representacion en memoria del documento que el navegador puede manipular.
+
+DOM es la base que permite a JavaScript interactuar con el contenido de una pagaina web, transformando el codigo HTML en una estructura de objetos manipulable.
+
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mi página</title>
+    </head>
+    <body>
+        <h1>Bienvenidos</h1>
+        <p>Este es un párrafo</p>
+    </body>
+</html>
+```
+
+Este HTML seria representado en el DOM como una estructura en forma de arbol. Siendo `document` el objeto que representa toda la pagina web
+- document
+    - html
+        - head
+            - title
+        - body
+            - h1
+            - p
+
+JavaScript puede acceder y modificar cualquier elemento del DOM utilizando el objeto global `document`, con el puede:
+    - Modificar el contenido (texto, atributos, clases)
+    - Añadir o eliminar elementos del DOM 
+    - Escuchar eventos de usuario (clicks, teclados, etc)
+
+```js
+/*===================
+    getElementById
+=====================
+    
+    - Este metodo selecciona un unico elemento por su id. Si no se encuentra devuelve null
+    - Solo selecciona el primer elemento que coincida con el id
+*/
+
+let titulo = document.getElementById("titulo");
+console.log(titulo); // <h1 id="titulo">Introduccion a JavaScript</h1>
+console.log(titulo.textContent); // Introduccion a JavaScript
+
+
+/*=====================
+    querySelector
+    querySelectorAll
+=======================
+    
+    - querySelector(): Selecciona el PRIMER elemento que coincida con un selector CSS
+    - querySelectorAll(): Selecciona TODOS los elementos que coincidan con un selector CSS
+*/
+
+let primerParrafo = document.querySelector(".mensaje");
+console.log(primerParrafo.textContent); // Primer parrafo
+
+let parrafos = document.querySelectorAll(".mensaje"); // Selector CSS
+console.log(parrafos);
+
+parrafos.forEach(parrafo => console.log(parrafo.textContent));
+// Primer parrafo
+// Segundo parrafo
+
+
+
+/*=====================
+    Modificar contenido y atributos
+=======================
+    
+    - innerHTML: Modifica el contenido HTML dentro de un elemento
+    - textContent: Modificar el texto dentro de un elemento
+    - setAttribute(): Modifica los atributos de un elemento
+    - style: Permite cambiar el estilo CSS en linea de un elemnto
+*/
+
+// Cambiar el texto con textContent
+primerParrafo.textContent = "Este es el nuevo texto generado con JavaScript";
+
+// Modificar el contenido HTML
+primerParrafo.innerHTML = "<strong>Nuevo texto en negrita</strong>";
+
+// Seleccionamos nuestro boton
+let boton = document.getElementById("boton");
+
+// Cambiar el atributo id
+boton.setAttribute("id", "miSuperBoton");
+
+// Cambiar el estilo
+boton.style.backgroundColor = "#00ff41";
+boton.style.padding = "10px";
+boton.style.border = "2px solid";
+boton.style.borderRadius = "5px";
+
+
+
+/*=====================
+    Eventos
+=======================
+    
+Los eventos permiten a los desarrolladores detectar interacciones del usuario con la pagina web, como hacer click en un boton, escribir en un campo de texto (input), etc. Los eventos son fundamentales para hacer que una pagina web sea interactiva.
+
+Un evento es una señal que se envia cuando ocurre una interaccion o cambio en el documento, como un click o una pulsacion de tecla. JavaScript permite escuchar estos eventos y ejecutar funciones especificas cuando ocurren.
+
+Para poder ESCUCHAR un evento y responder a esta accion, podemos usar el metodo addEventListener. Este metodo permite adjuntar una funcion o un evento especifico a un elemento
+
+Tipos comunes de eventos:
+
+    - Eventos de mouse: click, dblclick, mouseover, mouseout, mousemove
+    - Eventos de teclado: keydown, keyup
+    - Eventos de formulario: submit, focus, input, change
+    - Eventos de ventana: resize, scroll, load, unload
+*/
+
+// Estamos anexandole un escuchador de eventos a nuestro boton
+
+function saludar() {
+    alert("Hola mundo");
+}
+// Escribir la funcion directamentme
+// boton.addEventListener("click", () => alert("Hola mundo"))
+boton.addEventListener("click", saludar);
+
+
+// Seleccionamos nuestro input
+const escribir = document.getElementById("escribir");
+
+// Puedo incorporar el objeto event en el parametro para acceder a la informacion del evento
+escribir.addEventListener("keyup", function(event) {
+    // console.log(`Tecla pulsada ${event.key}`); // Ahora event.key me dice especificamente que valor introduje
+
+    // console.log(`Codigo de tecla ${event.code}`);
+
+    // Vamos a mostrar por consola el valor del campo de texto, aca me conviene que el evento sea keyup (se detona el evento cuando termine de insertar un caracter)
+    console.log(escribir.value);
+});
+
+
+/*================
+    event
+=================
+El parametro event
+    - Es implictamente pasado por el navegador al ejecutarse la funcion
+    - Podemos llamarlo como querramos: event, e, evt, etc
+    - Es una isntancia de objeto Event
+
+El objeto event no solo me proporciona mas informacion del evento que fue detonado, sino tambien metodos para poder realizar ciertas acciones
+
+
+==================================
+    Propagacion de eventos
+==================================
+Cuando ocurre un evento, este se propaga a traves del DOM en dos fases
+
+    - Fase de captura (de arriba hacia abajo)
+    - Fase de burbuja (de abajo hacia arriba)
+
+Podemos detener la propagacion de un evento usando el metodo event.stopPropagation()
+
+    <div id="padre" class="borde">
+        <button id="hijo">Boton</button>
+    </div>
+*/
+
+const padre = document.getElementById("padre");
+const hijo = document.getElementById("hijo");
+
+// Vamos a escuchar el click en el div padre
+padre.addEventListener("click", () => console.log("Se hizo click en el div padre"));
+
+
+// Con event.stopPropagation() evitamos la propagacion de eventos
+// Vamos a escuchar el click en el boton
+hijo.addEventListener("click", event => {
+    event.stopPropagation(); // Voy a detener la propagacion de eventos
+    console.log("Se hizo click en el boton hijo");
+});
+
+
+// Con event.preventDefault() evitamos el envio por defecto de los formularios HTML
+let miFormulario = document.getElementById("miFormulario");
+
+miFormulario.addEventListener("submit", function (event) {
+    event.preventDefault(); // Evitamos el envio por defecto del formulario HTML
+    alert("Formulario no enviado!");
+    console.log("Validando datos...");
+    console.log("Realizando otras operaciones...");
+    console.log("Enviando datos al servidor gracias a la api fetch...");
+});
+```
+
+---
+
 
 ## JavaScript V / Objetos globales y almacenamiento persistente. Iteracion en arrays, objetos y arrays de objetos
 
 - *Ejercicios en JavaScript Ejercicios Tercera Parte en el Campus Virtual*
 
 Las APIs son un conjunto de herramientas y funciones para poder interactuar con algo
-El navegador nos provee justamente de herramientas y funciones para interactuar con el navegador. Por tanto, todas aquellas funciones con las que podemos interactuar con el navegador, a traves de funciones para la consola, ventanas flotantes, etiquetas de graficos como [canvas](https://www.w3schools.com/html/html5_canvas.asp) son APIs del navegador, llamadas APIs web.
+El navegador nos provee justamente de herramientas y funciones para interactuar con el propio navegador. Por tanto, todas aquellas funciones con las que podemos interactuar con el navegador, a traves de funciones para la consola, ventanas flotantes, etiquetas de graficos como [canvas](https://www.w3schools.com/html/html5_canvas.asp) son APIs del navegador, llamadas APIs web.
 
 **El navegador nos provee estas funcionalidades para interactuar con el navegador, estas APIs web a traves de los objetos globales**
 
@@ -42,19 +248,19 @@ Un entorno de ejecucion es el lugar donde se ejecuta JavaScript. Tanto el navega
 En el entorno del navegador, los objetos globales incluyen todos los objetos estandar de JavaScript (como Array, String, Object, etc), asi como un conjunto de objetos especificos para la interaccion con la pagina web y su entorno.
 
 ### El objeto global `window`
-El objeto global principal en el entorno del navegador es `window`. Este objeto representa la ventana del navegador y actua como el contenedor global apra todas las variables (var concretamente), funciones y objetos globales de una pagina web.
+El objeto global principal en el entorno del navegador es `window`. Este objeto representa la ventana del navegador y actua como el contenedor global para todas las variables (var concretamente), funciones y objetos globales de una pagina web.
 
 Todos los objetos y funciones definidos en el ambito global estan automaticamente disponibles como propiedades del objeto `window`. Algunos objetos y metodos importantes del objeto `window` son:
 
 - `document`: Representa el [DOM](https://www.w3schools.com/whatis/whatis_htmldom.asp) de la pagina web actual, permitiendo el acceso y la manipulacion de elementos HTML
 
-- `alert()`, `prompt()`, `confirm()`: Metodos que permiten mostrar dialogos al usuario mediante ventanas flotantes
+- `alert()`, `prompt()`, `confirm()`: Metodos que permiten mostrar dialogos al usuario mediante ventanas flotantes y tambien recoger input
 
-- `setTimeout()`, `setInterval()`: Metoods para programar la ejecucion de codigo despues de un tiempo o en intervalos regulares, respectivamente
+- `setTimeout()`, `setInterval()`: Metodos para programar la ejecucion de codigo despues de un tiempo o en intervalos regulares, respectivamente
 
 - `location`: Proporciona informacion sobre la URL actual de la pagina y permite redireccionar a otras URL
 
-- `navigator`: Contiene inforamcion sobre el navegador, como la version, el agente de usuario y la geolocalizacion
+- `navigator`: Contiene informacion sobre el navegador, como la version, el agente de usuario y la geolocalizacion
 
 - `console`: Proporciona acceso a la consola del navegador para mostrar mensajes de depuracion
 
@@ -74,6 +280,486 @@ console.table(localStorage.getItem("carrito"));
 - `fetch`: Un objeto para realizar solicitudes HTTP asincronicas
 ```js
 fetch("https://jsonplaceholder.typicode.com/users") // Para obtener todo el listado de usuarios de esta base de datos, gracias a hacer una peticion HTTP con el objeto fetch a este endpoint (url)
+```
+
+```js
+// No tuve que instalar una libreria de console
+// No tuve que importar esta libreria
+// Tampoco tuve que crearla
+
+console.log("Hola mundo"); // Mensajes o prints por consola
+// window.prompt("Escribi un string"); // Ventanas flotantes para recibir input
+
+// Podemos hacer estas funcionales porque hay objetos que nos las proveen
+
+/*==================================
+    Almacenamiento persistente
+====================================
+
+////////////
+// Cookies
+Las cookies son pequeños fragmentos de informacion que se almacenan en el navbegador del usuario y se envian con cada peticion HTTP. Son mas antiguas que localStorage y sessionStorage y son ampliamente usadas para mantener la sesion del usuario, guardar preferencias, etc
+
+    - Pueden tener una fecha de expiracion especifica, si no, sera eliminada al cerrar la sesion del navegador
+    - A diferencia de localStorage y sessionStorage, las cookies se envian al servidor con cada solicitud HTTP
+    - Estan asociadas a un dominio especifico
+    - Uso principal: Autenticacion, tokens. Preferencias del usuario que se envian al servidor. Seguimiento (tracking) de actividad en la web
+
+/////////////////////
+// localStorage 
+localStorage es una API que permite almacenar datos de manera persistente en el navegador.
+
+Los datos almacenados en el localStorage no tienen una fecha de expiracion, lo que significa que estaran disponibles despues de que el usuario cierre el navegador o apague la compu
+
+    - Guardar datos que deben persistir incluso al cerrar el navegador
+    - Almacenar configuraciones de usuario, temas, carrito de compras, etc
+    - Tamaño max 5-10 MB por dominio
+    - Persistente, no tiene expiracion
+
+    1. Guardar datos: localStorage.setItem(clave, valor);
+    2. Leer datos: localStorage.getItem(clave);
+    3. Eliminar datos: localStorage.removeItem(clave);
+    4. Eliminar todo: localStorage.clear();
+
+///////////////////
+// sessionStorage
+sessionStorage es igual a localStorage pero con la diferencia de que los datos almacenados se mantienen disponibles solo durante la sesion del navegador. Cuando se cierra la pestaña o ventana del navegador, los datos se eliminan automaticamente
+
+    - Guardar datos temporales mientras la pestaña este abierta
+    - Informacion de formularios
+    - Tamaño max 5-10 MB por dominio
+    - Se borra al cerrar la pestña
+
+    1. Guardar datos: sessionStorage.setItem(clave, valor);
+    2. Leer datos: sessionStorage.getItem(clave);
+    3. Eliminar datos: sessionStorage.removeItem(clave);
+    4. Eliminar todo: sessionStorage.clear();
+*/
+
+// Seteamos el tema oscuro
+// localStorage.setItem("tema", "oscuro");
+
+// Seteamos el idioma de preferencia
+// localStorage.setItem("idioma", "es");
+
+// Guardamos un carrito de compras ficticio para que persista en nuestro navegador
+let carrito = [
+    { id: 1, nombre: "Hamburguesa", cantidad: 2 },
+    { id: 2, nombre: "Faina", cantidad: 3 },
+    { id: 3, nombre: "Fugazzeta rellena", cantidad: 4 },
+    { id: 4, nombre: "Chopp Quilmes", cantidad: 2 },
+];
+
+// Para guardar esto en el localStorage, tengo que transformarlo en texto plano
+console.log(carrito);
+console.table(carrito);
+
+// Aca justamente aparece JSON (JavaScript Object Notation), es decir, la notacion de objetos de JavaScript. Es basicamente un formato de texto plano
+let carritoJSON = JSON.stringify(carrito); // Convierto mi array de objetos en texto plano
+
+console.log(carritoJSON); // [{"id":1,"nombre":"Hamburguesa","cantidad":2},{"id":2,"nombre":"Faina","cantidad":3},{"id":3,"nombre":"Fugazzeta rellena","cantidad":4},{"id":4,"nombre":"Chopp Quilmes","cantidad":2}]
+
+// Tambien puedo transformar mi texto plano JSON en un array de objetos
+console.table(JSON.parse(carritoJSON));
+
+// Guardamos el carrito de compras en el localStorage
+// localStorage.setItem("carrito", carritoJSON);
+
+// Para mostrar por consola mi item carrito del localStorage
+let miCarrito = localStorage.getItem("carrito");
+console.table(JSON.parse(miCarrito));
+
+
+/*========================================
+    Como almacenar datos en JavaScript?
+==========================================
+
+Almacenar datos implica elegir la estructura adecuada de acuerdo con el tipo de informacion que se quiera guardar y como se desee manipular.
+
+    - Variables simples: Para valores unicos como numeros y strings
+    - Objetos: Para representar datos complejos con propiedades
+    - Arrays: Para almacenar listas de elementos del mismo tipo (idealmente)
+    - Arrays de objetos: Para manejar listas de elementos complejos que contienen multiples propiedades
+*/
+
+////////////
+// Objetos
+
+// Un objeto en JavaScript es una coleccion de propiedades, donde cada propiedad tiene un nombre clave y un valor. Los objetos son ideales para representar una unica entidad o elemento que tiene varias propiedades o atributos
+
+let persona = {
+    nombre: "Federico",
+    edad: 30,
+    ocupacion: "Desarrollador web"
+};
+
+/* Cuando usar objetos
+
+    - Cuando deseemos representar una entidad UNICA con multiples atributos
+    - Cuando sabemos que no habra multiples instancias o copias de esos datos en la aplicacion
+    - Cuando necesitamos acceder a propiedades especificas mediante sus nombres
+
+
+/////////////////////
+// Array de objetos
+
+Cuando necesitamos almacenar varias instancias del mismo tipo de entidad (lista de personas, lista de productos, lista de pedidos, etc) es comun usar un array de objetos
+
+Un array de objetos es una estructura que permite almacenar multiples objetos donde cada objeto tiene la misma estructura o contiene atributos similares
+
+    let carrito = [
+        { id: 1, nombre: "Hamburguesa", cantidad: 2 },
+        { id: 2, nombre: "Faina", cantidad: 3 },
+        { id: 3, nombre: "Fugazzeta rellena", cantidad: 4 },
+        { id: 4, nombre: "Chopp Quilmes", cantidad: 2 },
+    ];
+
+Cuando usar arrays de objetos?
+
+    - Cuando necesitamos almacenar multiples instancias de una misma entidad o estructura de datos
+    - Cuando necesitamos aplicar metodos de los arrays como map, filter, find, reduce, etc
+    - Usos comunes: Lista de usuarios registrados, inventario de productos, historial de transacciones, etc
+
+===================
+    En resumen
+===================
+
+Objeto simple: Para una unica entidad
+    - Cuando solo tenemos una entidad, como config de usuario, o un unico elemento que contiene datos con varias propiedades
+    - Acceder a propiedades individuales de un objeto es rapido y sencillo
+
+Array simple: Para listas sencillas de datos primitiovos
+    - Para una lista ordenada de elementos individuales (lista de nombres, de ids, etc) donde cada elemento no requiere atributo adicionales.
+    - En casos asi, un array simple de valores primitivos es suficiente
+
+Array de objetos: Para colecciones de entidades complejas, ideales para trabajar en conjunto
+    - Cuando tenemos una lista de entidades complejas, cada una con multiples propieades
+    - Esta configuracion nos permite realizar operaciones en lote y mantener una coleccion de  elementos realizacionados de forma organizada
+*/
+
+
+
+/*======================
+    Bucle for clasico
+========================
+
+    for (let i = 0; i < array.length; i++) {
+        console.log(array[i]);
+    }
+
+    - Ventajas: Maxima velocidad y control (podemos usar break y continue)
+    - Desventajas: Mas verboso (mas dificil de leer)
+*/
+
+// Sumar elementos
+const numeros = [1, 2, 3, 4, 5];
+let suma = 0;
+for (let i = 0; i < numeros.length; i++) {
+    suma += numeros[i];
+}
+console.log(suma); // 15
+
+// Buscar el elemento que comience con "ban", consologuearlo y salirnos del bucle
+const frutas = ["manzana", "banana", "naranja"];
+for (let i = 0; i < frutas.length; i++) {
+    if (frutas[i].startsWith("ban")) {
+        console.log(frutas[i]); // banana
+        break;
+    }
+}
+
+
+const productos = [
+    { id: 1, nombre: "Hamburguesa", cantidad: 2, precio: 15000 },
+    { id: 2, nombre: "Faina", cantidad: 3, precio: 800 },
+    { id: 3, nombre: "Porcion fugazzeta rellena", cantidad: 4, precio: 3500 },
+    { id: 4, nombre: "Chopp Quilmes", cantidad: 2, precio: 6000 },
+    { id: 5, nombre: "Gaseosa DIA", cantidad: 5, precio: 600 },
+];
+
+// Filtrar productos caros > 6000 y guardar los productos caros en un array
+let precioMax = 6000;
+let losInalcanzables = [];
+
+for (let i = 0; i < productos.length; i++) {
+    if (productos[i]["precio"] >= precioMax) {
+        losInalcanzables.push(productos[i]);
+    }
+}
+
+console.log(losInalcanzables); // [{id: 1, nombre: 'Hamburguesa', cantidad: 2, precio: 15000}, {id: 4, nombre: 'Chopp Quilmes', cantidad: 2, precio: 6000}]
+
+
+/*======================
+    Bucle forEach
+========================
+
+    array.forEach((elemento, indice, arrayOriginal) => {
+        console.log(elemento, indice);
+    })
+
+    - Ventajas: Sintaxis limpia, no necesita contador
+    - Desventajas: Mas lento y no se puede romper con break ni continue
+*/
+
+
+const colores = ["rojo", "verde", "azul"];
+colores.forEach(color => console.log(color));
+
+/* // Exactamente igual que arriba pero con una funcion declarada en lugar de una arrow function
+colores.forEach(function(color) {
+    console.log(color)
+})
+*/
+// rojo
+// verde
+// azul
+
+// Crear un nuevo array con los numeros duplicados 
+// const numeros = [1, 2, 3, 4, 5];
+const numerosDobles = []; // Iniciamos un array vacio al que le iremos pusheando los valores
+numeros.forEach(num => numerosDobles.push(num * 2));
+console.log(numerosDobles); // [2, 4, 6, 8, 10]
+
+const estudiantes = [
+    { nombre: "Federico", nota: 10 },
+    { nombre: "Santiago", nota: 8 },
+    { nombre: "Fatima", nota: 9 },
+    { nombre: "Franco", nota: 4 },
+    { nombre: "Agus", nota: 2 },
+    { nombre: "Ernesto", nota: 7 },
+    { nombre: "Juliana", nota: 8 },
+];
+
+// Actualizar propiedades de los estudiantes asignando un aprobado = true si la nota fue >= 7
+estudiantes.forEach(estudiante => estudiante.aprobado = estudiante.nota >= 7);
+console.table(estudiantes);
+
+
+
+// Metodos funcionales: map, filter, reduce, find y findIndex, for...of, some y every
+/*======================
+    map()
+========================
+
+    const nuevosValores = array.map(elemento => elemento * 2);
+
+    - Proposito: Transformar cada elemento
+    - Retorna: Nuevo array con los resultados
+*/
+
+// Array de cuadrados
+// const numeros = [1, 2, 3, 4, 5];
+const cuadrados = numeros.map(num => num * num);
+console.log(cuadrados); // [1, 4, 9, 16, 25]
+
+// Convertir a strings
+const edades = [34, 25, 20, 46];
+const edadesSaludo = edades.map(edad => `Hola! Tengo ${edad} años`);
+console.log(edadesSaludo); // ['Hola! Tengo 34 años', 'Hola! Tengo 25 años', 'Hola! Tengo 20 años', 'Hola! Tengo 46 años']
+
+
+/* Generar un nuevo array con los nombres de los estudiantes
+const estudiantes = [
+    { nombre: "Federico", nota: 10 },
+    { nombre: "Santiago", nota: 8 },
+    { nombre: "Fatima", nota: 9 },
+    { nombre: "Franco", nota: 4 },
+    { nombre: "Agus", nota: 2 },
+    { nombre: "Ernesto", nota: 7 },
+    { nombre: "Juliana", nota: 8 },
+];*/
+const nombresEstudiantes = estudiantes.map(estudiante => estudiante.nombre);
+console.log(nombresEstudiantes); // ['Federico', 'Santiago', 'Fatima', 'Franco', 'Agus', 'Ernesto', 'Juliana']
+
+
+/*======================
+    filter()
+========================
+
+    const filtrados = array.filter(elemento => elemento > 10)
+
+    - Proposito: Seleccionar los elementos que cumplan una condicion (y de true)
+    - Retorna: Nuevo array con los elementos filtrados
+*/
+
+const numerosGrandes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+// Filtrar los numeros pares con filter
+const numerosPares = numerosGrandes.filter(num => num % 2 === 0);
+console.log(numerosPares); // [2, 4, 6, 8, 10]
+
+
+// Filtrar strings largos > 5 caracteres
+const palabras = ["holis", "chau", "bienvenido", "ok", "supercalifragilisticuespialidoso"];
+const palabrasLargas = palabras.filter(p => p.length > 5);
+console.log(palabrasLargas)
+/* // Mismo resultado que arriba pero sin la comodidad de la sintaxis de la funcion flecha
+const palabrasLarguisimas = palabras.filter(function(p) {
+    return p.length > 5
+}); */
+
+/* Generar un nuevo array con los estudiantes que tengan mas de un 8
+const estudiantes = [
+    { nombre: "Federico", nota: 10 },
+    { nombre: "Santiago", nota: 8 },
+    { nombre: "Fatima", nota: 9 },
+    { nombre: "Franco", nota: 4 },
+    { nombre: "Agus", nota: 2 },
+    { nombre: "Ernesto", nota: 7 },
+    { nombre: "Juliana", nota: 8 },
+];*/
+const estudiantesProMax = estudiantes.filter(estudiante => estudiante.nota > 8);
+console.table(estudiantesProMax);
+
+
+
+/*======================
+    reduce()
+========================
+
+    const suma = array.reduce((total, elemento) => total + elemento, 0)
+
+    - Proposito: Reducir el array a un unico valor
+    - Retorna: Valor acumulado
+*/
+// Sumar elementos
+const decenas = [10, 20, 30];
+const sumaDecenas = decenas.reduce((total, num) => total + num, 0); // El 0 es el valor del total
+console.log(sumaDecenas); // 60
+
+
+// Obtener el valor total de todo lo vendido (ventas x cantidad)
+const ventas = [
+    { producto: "Camisa", cantidad: 3, precio: 25 },
+    { producto: "Pantalon", cantidad: 2, precio: 40 },
+    { producto: "Zapatos", cantidad: 1, precio: 80 },
+];
+
+const totalVentas = ventas.reduce((total, venta) => total + (venta.cantidad * venta.precio), 0);
+console.log(totalVentas); // 235
+console.log("1" + 1); // Ojota! Esto da 11
+
+
+
+/*========================
+    find() y findIndex()
+==========================
+
+    const encontrado = array.find(elemento => elemento.id === 123);
+    const indice = array.findIndex(elemento => elemento.id === 123);
+
+    - Proposito: Buscar el primer elemento que cumpla una condicion
+    - Retorna: Elemento o Indice (o undefined / -1 si no lo encuentra)
+    - (Hacen lo mismo que filter pero devuelven solo la primer coincidencia)
+*/
+
+const numerosRandom = [5, 12, 8, 130, 44];
+
+// Encontramos el primero que supere 10
+const encontrado = numerosRandom.find(num => num > 10);
+console.log(encontrado); // 12
+
+// Encontrar el indice del numero superior a 100
+const indice = numerosRandom.findIndex(num => num > 100);
+console.log(indice); // 3
+
+
+
+
+/*========================
+    some() y every()
+==========================
+
+    const algunoCumple = array.some(elemento => elemento > 0);
+    const todosCumplen = array.every(elemento => elemento > 0);
+
+    - Proposito: Verificar si alguno / todos cumplen una condicion
+    - Retorna: Booleano
+*/
+
+const numsRandom = [1, 3, 5, 7, 8];
+const hayPares = numsRandom.some(num => num % 2 === 0);
+console.log(`Hay pares?: ${hayPares}`); // Hay pares?: true
+
+const todosPositivos = numsRandom.every(num => num > 0);
+console.log(todosPositivos); // true
+
+/* Comprobar si todos los estudiantes aprobaron
+const estudiantes = [
+    { nombre: "Federico", nota: 10 },
+    { nombre: "Santiago", nota: 8 },
+    { nombre: "Fatima", nota: 9 },
+    { nombre: "Franco", nota: 4 },
+    { nombre: "Agus", nota: 2 },
+    { nombre: "Ernesto", nota: 7 },
+    { nombre: "Juliana", nota: 8 },
+];*/
+
+const hayAprobados = estudiantes.every(estudiante => estudiante.nota >= 4);
+console.log(`Aprobaron todos? ${hayAprobados}`);
+
+
+
+
+/*========================
+    for...of
+==========================
+
+    for (const elemento of array) {
+        console.log(elemento);
+        if (elemento === "algo") break;
+    }
+
+    - Ventajas: Sintaxis limpia y permite break y continue
+    - Desventajas: No provee indice automaticos
+*/
+
+const empleados = [
+    { nombre: "Nahuel", salario: 1000 },
+    { nombre: "Lautaro", salario: 1500 },
+    { nombre: "Alan", salario: 2000 },
+    { nombre: "Agus", salario: 3000 },
+];
+
+for (const empleado of empleados) {
+    if (empleado.salario >= 2000) {
+        console.log(`${empleado.nombre} gana terrible plata!`);
+        break;
+    }
+}
+
+
+
+/*=========================
+    Iteracion de objetos
+===========================
+
+    - for...in
+    - Object.keys(), Object.values(), Object.entries()
+
+
+
+==================================
+    Comparacion de Rendimiento
+==================================
+
+    1. Bucles clasicos (for, while) son los mas rapidos para iteraciones simples
+    2. Metodos funcionales (map, filter, etc) son mas lentos pero mas expresivos (faciles de leer)
+    3. for...of ofrece un buen equilibrio entre rendimiento y legibilidad
+
+
+==================================
+    Recomendaciones de uso
+==================================
+
+    - Transformar un array:     map()
+    - Filtrar elementos:        filter()
+    - Reducir a un valor:       reduce()
+    - Buscar elemento:          find() y findIndex()
+    - Bucle sencillo de leer:   forEach()
+    - Necesito usar break:      for...of, for clasico
+    - Verificar condiciones:    some() y every()
+*/
 ```
 
 
@@ -110,87 +796,84 @@ console.log(conjunto); // Set(4) {1, 2, 3, 4}
 **JavaScript "envuelve" en objetos los tipos de datos primitivos como strings o numeros, es decir los trata como objetos otorgandoles metodos (Object Wrappers)**
 
 ```js
-/*=====================
+/*======================
     Arrays en JS
-=======================
+========================
 
-Un array es una lista ordenada de elementos, donde cada uno tiene una posicion o indice.
-
-Los arrays en JS son muy flexibles: pueden contener cualquier tipo de datos (numeros, cadenas, booleanos, otros arrays, objetos, funciones, etc) y los elementos no tienen que ser del mismo tipo
+Un array es una lista ordenada de elementos donde cada uno tiene una posicion o indice.
+Los arrays en JS son muy flexibles: pueden contener cualquier tipo de datos (numeros, cadenas, booleanos, otros arrays, objetos, funciones, etc) y los elementos no tienen por que ser del mismo tipo
 */
 
-let frutas = ["manzana", "banana", "naranja"];
-console.log(frutas[0]); // manzana
-console.log(frutas[2]); // naranja
+let colores = ["azul", "verde", "rojo"];
+console.log(colores[0]); // azul
+console.log(colores[2]); // rojo
 
 
-/*=====================
+/*======================
     Objetos en JS
-=======================
+========================
 
-Un objeto es una coleccion de pares clave-valor. 
-
-Las claves son strings que identifican a cada valor, lo cual permite un acceso rapido y estructurado a los datos. Los objetos son utiles cuando deseas representar la entidad con multiples propiedades
+Un objeto en JavaScript es una coleccion de pares clave-valor
+Las claves son strings que identifican a cada valor, lo cual permite un acceso rapido y estructurado a los datos.
 */
 
-// Creacion literal de objeto
 let persona = {
-    nombre: "Santiago",
-    edad: 21,
-    ciudad: "Quilmes"
-}
+    nombre: "Nico",
+    edad: 30,
+    ciudad: "Berazategui"
+};
 
-// Podemos acceder a las propiedades de un objeto mediante dos notaciones: notacion de punto y notacion de corchete
-
+// Podemos acceder a las propiedades de un objeto mediante la notacion de punto y de corchete
 // Notacion de punto
-console.log(persona.nombre); // Santiago
+console.log(persona.nombre); // Nico
 
 // Notacion de corchete
-console.log(persona["ciudad"]); // Quilmes
+console.log(persona["ciudad"]); // Berazategui
 
-// Agregando una propiedad
-persona.pais = "El tricampeon, papa";
+// Agregamos una propiedad
+persona.pais = "Argentina";
 
-// Eliminar propiedad
+// Eliminamos una propiedad
 delete persona.edad;
 
-console.log(persona)
+console.log(persona); // {nombre: 'Nico', ciudad: 'Berazategui', pais: 'Argentina'}
 
-// Metodos de objetos: funciones almacenadas en una propiedad
+
+// Metodos de objetos: Los objetos tambien pueden tener metodos, que son funciones almacenadas en una propiedad
 let perro = {
-    nombre: "Firulais",
+    nombre: "Batata",
     ladrar: function() {
         console.log("Guau!");
     }
-}
+};
 
 perro.ladrar(); // Guau!
 
 
-
-
 /*===============================
-    Metodos de Strings en JS
+    Metodos de strings en JS
 ===============================*/
 
-// 1. length: Devuelve la longitud del string
+// 1. length: Devuelve la longitud de un string
 console.log("Hola".length); // 4
 
-// 2. chartAt(index): Devuelve el caracter en la posicion especificada
-console.log("Hola".charAt(1)); // o
+// 2. charAt(index): Devuelve el caracter en la posicion especificada
+console.log("Hola".charAt(2)); // l
 
 // 3. concat(str1, str2): Concatena strings
-console.log("Hola".concat(" ", "mundo")); // Hola mundo
+console.log("Hola".concat(" ", "mundo!")); //Hola mundo!
 
 // 4. includes(substring): Devuelve true si el substring esta en el string
-console.log("JavaScript".includes("Script")); // true (ojota, es case-sensitive)
+console.log("JavaScript".includes("Script")); // true (es case sensitive)
 
-// 5. startsWith(substring) o endsWith(substring): Devuelve true si el string comienza o termina con el substring
+// 5.   startsWith: Comprueba si el string comienza con el substring
+//      endsWith: Comprueba si el string termina con el substring
 console.log("Hola mundo".startsWith("Hola")); // true
 
-// 6. indexOf(substring): Devuelve el indice de la primera aparicion del substring
-// lastIndexOf(substring): Devuelve el indice de la ultima aparicion del substring
+// 6.   indexOf(substring): Devuelve el indice de la PRIMERA aparicion del substring
+//      lastIndexOf(substring): Devuelve la ULTIMA aparicion del substring
 console.log("banana".indexOf("a")); // 1
+console.log("banana".lastIndexOf("a")); // 5
 
 // 7. replace(searchValue, newValue): Reemplaza una parte del string
 console.log("Hola mundo".replace("mundo", "Div 334")); // Hola Div 334
@@ -198,84 +881,79 @@ console.log("Hola mundo".replace("mundo", "Div 334")); // Hola Div 334
 // 8. replaceAll(searchValue, newValue): Reemplaza TODAS las apariciones
 console.log("1, 2, 3, 4, 5".replaceAll(", ", ";")); // 1;2;3;4;5
 
-// 9. toLowerCase(): Convierte a minusculas
-console.log("HOLA".toLowerCase()); // hola
+// 9.   toLowerCase(): Convierte a minusculas
+//      toUpperCase(): Convierte a mayusculas
+console.log("AGUANTE SAN LORENZO".toLowerCase()); // aguante san lorenzo
+console.log("hola profe, disculpe soy muy timido".toUpperCase()); // HOLA PROFE, DISCULPE SOY MUY TIMIDO
 
-// 10. toUpperCase(): Convierte a mayusculas
-console.log("holi".toUpperCase()); // HOLI
+// 10.  trim(): Elimina espacios en blanco al inicio y al final
+//      trimStart(): Elimina espacios al principio
+//      trimEnd(): Elimina espacios al final
+console.log("      Hola   ".trim()); // 
 
-// 11. trim(): Elimina el espacioen blanco al comienzo Y al final
-// trimStart() y trimEnd(): Eliminan espacios al comienzo O al final
-console.log("   Hola    ".trim()); // Hola
-
-// 12. slice(start, end): Extrae parte del string
+// 11. slice(start, end): Extrae parte del string
 console.log("JavaScript".slice(0, 4)); // Java
 console.log("JavaScript".slice(-6)); // Script
 
-// 13. substring(start, end): Similar a slice, pero NO acepta negativos
+// 12. substring(start, end): Similar a slice pero no acepta negativos
 console.log("JavaScript".substring(4, 10)); // Script
 
-// 14. split(separator): Divide el string en un array
-console.log("rojo,verde,azul".split(",")); // ['rojo', 'verde', 'azul']
+// 13. split(separator): Divide el string en un array
 console.log("Hola".split("")); // ['H', 'o', 'l', 'a']
+console.log("rojo, verde, azul".split(", ")); // ['rojo', 'verde', 'azul']
 
+// 14. repeat(count): Repite el string
+console.log("ji".repeat(3)); // jijiji
 
-// 15. repeat(count): Repite el string
-console.log("Ji".repeat(3)); // JiJiJi
-
-// 16. match(regex): Devuelve coincidencias con una expresion regular
+// 15. match(regex): Devuelve coincidencias con una expresion regular
 console.log("abc123".match(/\d+/g)); // ['123']
 
 
 
-
 /*===============================
-    Metodos de Arrays en JS
+    Metodos de arrays en JS
 ===============================*/
 
 // 1. length: Devuelve la longitud del array
-console.log([1, 2, 3].length); // 3
+console.log([1, 2, 3, 4, 5].length); // 5
 
-// 2. push(element): AGREGA un elemento AL FINAL de array
-let arr = [1, 2, 3];
-arr.push(4);
-console.log(arr); // [1, 2, 3, 4]
-
-// 3. pop(): ELIMINA el ULTIMO elemento y lo devuelve
-console.log(arr.pop()); // 4
+// 2. push(element): AGREGA un elemento al FINAL del array
+let arr = [1, 2];
+arr.push(3);
 console.log(arr); // [1, 2, 3]
+
+// 3. pop(): ELIMINA el ultimo elemento del array y lo devuelve
+arr.pop();
+console.log(arr); // [1, 2]
+// console.log(arr.pop()); // 3
 
 // 4. unshift(element): AGREGA un elemento al INICIO del array
 arr.unshift(0);
-console.log(arr); // [0, 1, 2, 3]
+console.log(arr); // [0, 1, 2]
 
-// 5. shift(): ELIMINA el PRIMER elemento y lo devuelve
+// 5. shift(): ELIMINA el primer elemento y lo devuelve
 console.log(arr.shift()); // 0
-console.log(arr); // [1, 2, 3]
 
 // 6. concat(array): Concatena arrays
-console.log([1, 2, 3].concat([4, 5, 6])); // [1, 2, 3, 4, 5, 6]
+console.log([1, 2, 3, 4, 5].concat([6, 7, 8, 9, 10])); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
 // 7. join(separator): Une los elementos en un string
-console.log([1, 2, 3].join('-')); // "1-2-3"
-
+console.log([1, 2, 3, 4, 5].join("-")); // 1-2-3-4-5
 
 // 8. slice(start, end): Extrae una copia parcial del array
-console.log([1, 2, 3, 4].slice(1, 3)); // [2, 3]
+console.log([1, 2, 3, 4, 5].slice(1, 3)); // 2, 3
 
-// 9. splice(start, deleteCount, ...items): Modifica el array in situ, puede borrar y agrega
-let arrayDos = [1, 2, 3, 4, 5, 6];
-arrayDos.splice(1, 2, "dos", "tres")
-console.log(arrayDos); // [1, 'dos', 'tres', 4, 5, 6]
+// 9. splice(start, deleteCount, ...items): Modifica el array in situ y nos permite borrar y agregar
+let miArray = [1, 2, 3, 4, 5];
+miArray.splice(1, 2, "dos", "tres"); // posicion 1, 2 elementos a eliminar, "valores1", "valores2"
+console.log(miArray); // [1, 'dos', 'tres', 4, 5]
 
-// 10. indexOf(element): Devuelve la primera posicion del elemento o -1
-console.log([1, 2, 3].indexOf(2)); // 1
+// 10.  indexOf(element): Devuelve la primera posicion del elemento o -1
+//      lastIndexOf(element): Devuelve la ultima posicion del elemento o -1
+console.log([1, 2, 3, 4, 5].indexOf(3)); // 2 -> El 3 se encuentra en la posicion 2
 
-// 11. lastIndexOf(element): Devuelve la ULTIMA posicion del elemento
-console.log([1, 2, 3, 2].lastIndexOf(2)); // 3
-
-// 12. includes(element): Devuelve true si el elemento existe
-console.log([1, 2, 3].includes(2)); // true
+// 11. includes(element): Devuelve true si el elemento existe
+console.log([1, 2, 3, 4, 5].includes(3)); // true
 ```
 
 ---

@@ -3,3 +3,14 @@ body {
     background-color: #0d1117;
     color: #f0f6fc;
 }  
+
+button:hover {
+    cursor: pointer;
+}
+
+.borde {
+    margin-top: 10px;
+    padding: 10px;
+    border: 2px solid #00ff41;
+    border-radius: 5px;
+}
