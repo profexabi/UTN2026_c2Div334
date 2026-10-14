@@ -19,11 +19,678 @@ Antes de ejecutar línea por línea, el motor de JavaScript analiza todo el cód
 **2. Fase de ejecución**
 Recién después ejecuta el código en orden.
 
+---
+
+## Prox clase
+- **TODO: Continuar desde pag 8/17 Uso con aync/await**
+
+## JavaScript VIII / JSON, asincronia, promesas y fetch, async/await y try...catch
+### JSON (JavaScript Object Notation)
+JSON es un formato ligero de intercambio de datos que se convirtio en el estandar para la comunicacion entre aplicaciones en la web.
+
+JSON es basicamente un string formateado para enviar y recibir datos. Aunque proviene de la sintaxis de JavaScript, es independiente del lenguaje y ampliamente utilizado en todo tipo de sistemas y lenguajes de programacion.
+
+Es un formato de texto que representa datos estructurados basados en dos estructuras fundamentales
+1. Coleccion de pares nombre/valor (equivalente a un objeto en JavaScript)
+2. Lista ordenada de nombres (equivalente a un array en JavaScript)
+
+- Es textual y legible por humanos
+- Es ligero (ocupa poco espacio)
+- Es facil de parsear y generar
+- Es independiente del lenguaje (aunque su sintaxis se base en los objetos de JavaScript)
+```json
+[
+  {
+    "id": 1,
+    "name": "Leanne Graham",
+    "username": "Bret",
+    "email": "Sincere@april.biz",
+    "address": {
+      "street": "Kulas Light",
+      "suite": "Apt. 556",
+      "city": "Gwenborough",
+      "zipcode": "92998-3874",
+      "geo": {
+        "lat": "-37.3159",
+        "lng": "81.1496"
+      }
+    },
+    "phone": "1-770-736-8031 x56442",
+    "website": "hildegard.org",
+    "company": {
+      "name": "Romaguera-Crona",
+      "catchPhrase": "Multi-layered client-server neural-net",
+      "bs": "harness real-time e-markets"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Ervin Howell",
+    "username": "Antonette",
+    "email": "Shanna@melissa.tv",
+    "address": {
+      "street": "Victor Plains",
+      "suite": "Suite 879",
+      "city": "Wisokyburgh",
+      "zipcode": "90566-7771",
+      "geo": {
+        "lat": "-43.9509",
+        "lng": "-34.4618"
+      }
+    },
+    "phone": "010-692-6593 x09125",
+    "website": "anastasia.net",
+    "company": {
+      "name": "Deckow-Crist",
+      "catchPhrase": "Proactive didactic contingency",
+      "bs": "synergize scalable supply-chains"
+    }
+  },
+]
+```
+
+- Los datos estan en pares nombre/valor (clave/valor)
+- Los datos estan separados por comas
+- Las llaves `{}` representa objetos
+- Los corchetes `[]` representan arrays
+- Las comillas dobles `""` son obligatorias para nombres de propiedades y strings
+
+JavaScript proporciona dos metodos fundamentales para trabajar con JSON
+
+1. `JSON.stringify()`: Convierte un objeto JS a una cadena JSON
+2. `JSON.parse()`: Convierte una cadena JSON a un objeto JavaScript
+
+#### Usos comunes de JSON
+1. **Comunicacion cliente-servidor**: JSON es el formato estandar para las APIs REST
+2. **Almacenamiento local**: Guardar datos en el navegador
+3. **Configuraciones**: Muchas herramientas usan JSON para configuraciones (como `package.json` en Node.js)
+
+#### Limitaciones de JSON
+1. No soporta comentarios
+2. No soporta funciones
+3. No pueden usarse tipos especiales como: fechas, regex, map, set, etc
+
+#### Buenas practicas
+1. Validar JSON: Antes de parsear, especialmente si viene de fuentes externas
+2. Manejar errores: Siempre usar try...catch con `JSON.parse()`
+3. No usar para datos sensibles: JSON no es un formato seguro por si mismo
+4. Optimizar para tamaño: Minimizar el JSOn en produccion
+
+#### En resumen
+**JSON es una parte fundamental del ecosistema JavaScript y la web moderna**
+- Es el formato estandar para el intercambio de datos
+- Es simple y muy ligero
+- Esta integrado en todos los navegadores y en Node.js
+
+```js
+
+```
+
+
 
 ---
 
+
+
+
+
 ## JavaScript VII / Callbacks, High Order Functions, Destructuring, Spread Operator, funciones anidadas y web apis
 
+### Relacion entre objetos globales y APIs web
+- JavaScript es el lenguaje
+- Web APIs son las herramientas del navegador (que es el entorno de ejecucion)
+- Objetos globales son el lugar donde el entorno expone estas herramientas
+
+```js
+setTimeout();
+/*
+- Es una web API en el navegador
+- expuesta como una funcion global
+- accesible desde window
+- Utilizada por JavaScript PERO no es parte del lenguaje ECMAScript
+*/
+```
+
+### Que son las Web APIs?
+Las web APIs no forman parte del lenguaje JavaScript.
+**Son funcionalidades que nos provee el entorno de ejecucion (el navegador)**
+
+El navegador hace algo importante: expone las Web APIs dentro del objeto global
+```js
+// setTimeout existe porque el navegador "inyecta" esta funcion en wiondow
+window.setTimeout();    // API de temporizadores
+window.fetch();         // API de peticiones HTTP
+window.localStorage();  // API de almacenamiento
+window.navigator();     // API del navegador
+window.document;        // API del DOM
+
+// En la practica, podemos omitir "window"
+```
+**Las web APIs se acceden a traves de objetos globales**
+
+
+### Que es una API?
+API significa "Application Programming Interface" (Interfaz de Propagamacion de Aplicaciones).
+
+Basicamente
+    Una API es un conjunto de funciones y herramientas que podemos usar para interactuar con algo, como el navegador, el servidor, una libreria, etc
+
+**Una Web API es una funcion o conjunto de funciones que el navegador nos da para que las usemos con JavaScript**
+
+JavaScript de por si es un lenguaje de programacion muy basico, pero cuando se ejecuta en un navegador, puede acceder a funcionalidades especiales que el navegador nos proporciona:
+
+- Manipular el DOM `document.getElementById()`
+- Esperar un tiempo `setTimeout()`
+- Hacer peticiones HTTP `fetch()`
+- Trabajar con audio, video, GPS, etc
+
+### Que APIs Web existen?
+
+#### 1. APIs del DOM
+- `document.querySelector()`
+- `element.addEventListener()`
+
+- Nos permiten acceder y modificar el HTML y CSS de la pagina
+- Manipulacion de elementos, eventos, clases, estilos, etc
+
+---
+
+#### APIs de Red
+- `fetch()` para peticiones HTTP
+- `WebSocket` para comunicacion en tiempo real
+
+- Permiten comunicarnos con servidores
+- Peticiones HTTP, charts, notificaciones en tiempo real
+
+---
+
+#### APIs de almacenamiento
+- `localStorage()`
+- `sessionStorage()`
+- `IndexedDB`
+- Cookies (mediante `document.cookie`)
+
+- Guardan informacion en el navegador
+- Guardar preferencias, datos de sesion, apps sin conexion
+
+---
+
+#### Timers
+- `setTimeout()`
+- `setInterval()`
+
+- Permiten ejecutar funciones luego de un cierto tiempo
+- Retrasos, animaciones, etc
+
+---
+
+#### APIs de dispositivos y multimedia
+- `navigator.geolocation` para el GPS
+- `MediaDevices.getUserMedia()` para el microfono y camara
+- `Notification` para notificaciones del sistema
+- `Battery API`, `Clipboard API`
+
+- Interaccion con hardware y medios
+- Apps moviles, camara, permisos, grabaciones, notificaciones
+
+---
+
+#### APIs de interfaz grafica
+- [`Canvas API`](https://www.w3schools.com/html/html5_canvas.asp)
+- `WebGL`
+- `Fullscreen API`
+- `Screen Orientation API`
+
+- Controlar animaciones, graficos y visualizacion
+- Juegos, visualizaciones, graficos dinamicos
+
+
+---
+
+- JavaScript puro es simple
+- Pero el navegador le da superpoderes con las Web APIs
+- Estas APIs permiten que JavaScript haga cosas reales: comunicarse con servidores, manipular la pagina, guardar datos, usar la camara, etc
+
+
+```js
+/*=======================
+    Callbacks
+=========================
+
+Los callbacks son funciones que se pasan como argumentos a otras funciones y se ejecutan despues de que ocurra algun evento o se complete alguna operacion*/
+
+// Ejemplo basico de callback
+function saludar(nombre, callback) {
+    console.log(`Hola ${nombre}`);
+    callback(); // Se ejecuta el callback
+}
+
+function despedirse() {
+    console.log("Nos vemos!");
+}
+
+saludar("Esteban", despedirse);
+// Hola Esteban
+// Nos vemos!
+
+// Ejemplo de callback con un temporizador
+/*
+setTimeout(() => {
+    console.log("Esto se ejecuta en 2 segundos")
+}, 2000);
+*/
+
+
+/*=========================================
+    Funciones como First Class Citizens
+===========================================
+
+Por que es que esto se produce? 
+En JavaScript, las funciones son "ciudadanas de primer clase", es decir, tiene prioridad y pueden ser
+
+    - Asignadas a variables
+    - Pasadas como argumentos
+    - Retornadas desde otras funciones
+*/
+
+
+/////////////////////
+// Asignar funcion a una variable
+const miCallback = function () {
+    console.log("Callback ejecutado");
+}
+
+// Pasamos esta funcion como argumento a otra funcion
+function ejecutarCallback(callback) {
+    callback(); // Aca invocamos a la funcion que pasamos por parametro
+}
+
+ejecutarCallback(miCallback); // Callback ejecutado
+
+
+/////////////////////
+// Sincronia vs Asincronia
+
+// Callback sincrono
+function procesoPesado(callback) {
+    console.log("Iniciando proceso pesado...");
+
+    // Simulamos un procesamiento que tarde unos segundos
+    for (let i = 0; i < 5000; i++) {
+        console.log("<- Vueltas de iteracion");
+    }
+
+    // Cuando termine este proceso pesado de arriba, llamara a la funcion
+    callback(); // Aca imprimira "Proceso completado"
+}
+
+/*
+procesoPesado(function() {
+    console.log("Proceso completado");
+});
+*/
+
+// Cuando ejecutamos el proceso pesado, JavaScript no permitira continuar ejecutando el codigo y mostrando este console.log() hasta que haya terminado el proceso pesado de arriba. Esto traba la ejecucion del codigo
+console.log("Esto se ejecuta despues del callback");
+
+
+////////////////////////
+// Callback asincronico
+function procesoAsincronico(callback) {
+    console.log("Iniciando proceso asincrono...");
+
+    // El temporizador como vimos arriba es una funcion asincrona, entonces no traba todo el flujo hasta que termine, corre en paralelo y no molesta
+    setTimeout(function () {
+        callback();
+    }, 2000);
+}
+
+procesoAsincronico(() => console.log("Proceso asincronico completado"));
+
+console.log("Fin del proceso asincronico");
+
+console.log("Continuamos con el codigo");
+
+// Aca sucede el proceso contrario, el codigo asincronico no se queda deteniendo todo 2 segundos, sino que corre en paralelo y el resto del codigo puede seguir ejecutandose sin problema
+
+////////////////////////
+// Casos de usos comunes de callbacks:
+
+// 1. Temporizadores (Timers)
+setTimeout(() => console.log("Esto se ejecuta despues de 3 segundos"), 3000);
+
+
+// 2. Eventos del DOM
+const boton = document.getElementById("boton");
+
+boton.addEventListener("click", event => console.log("Boton clickeado ", event.target));
+
+
+// 3. Operaciones con Arrays
+const numeros = [1, 2, 3, 4, 5];
+
+numeros.forEach(function (numero, indice) {
+    console.log(`Indice: ${indice}, valor: ${numero}`);
+});
+
+/*
+const duplicados = numeros.map(function(numero) {
+    return numero * 2;
+})
+    */
+
+const duplicados = numeros.map(num => num * 2);
+console.log(duplicados); // [2, 4, 6, 8, 10]
+
+
+// 4. Peticiones HTTP (mas adelante)
+
+
+// Lectura de archivos (Node.js tambien mas adelante)
+
+
+/*==========================
+    Ventajas y Desventajas
+============================
+
+Ventajas
+    - Simplicidad: Facil de entender para operaciones simples
+    - Universalidad: Compatibilidad con todos los navegadores
+    - Flexibilidad: Permiten crear codigo reutilizable
+
+Desventajas
+    - Callback Hell: Anidamiento excesivo que dificulta la lectura
+    - Manejo de errores: Complicado con calbacks anidados
+    - Flujo de control: Dificil de seguir con operaciones complejas
+
+
+////////////////////////////
+// Ejemplo de callback hell
+
+function procesoCompleto(callback) {
+    paso1(function (error, resultado1) {
+        if (error) return callback(error);
+        paso2(resultado1, function (error, resultado2) {
+            if (error) return callback(error);
+            paso3(resultado2, function (error, resultado3) {
+                if (error) return callback(error);
+                paso4(resultado3, function (error, resultadoFinal) {
+                    if (error) return callback(error);
+                    callback(null, resultadoFinal);
+                });
+            });
+        });
+    });
+}
+
+// https://imgur.com/BtjZedW
+
+
+
+///////////////////////////
+// Alternativas modernas
+
+Para evitar el callback hell (anidamiento excesivo), se desarrollaron alternativas como
+    - Promesas: .then().catch()
+    - Async/Await: Sintaxis mas limpia y legible
+
+// Mismo ejemplo con async/await
+async function procesoCompleto() {
+    try {
+        const resultado1 = await paso1();
+        const resultado2 = await paso2(resultado1);
+        const resultado3 = await paso3(resultado2);
+        return resultadoFinal;
+    
+    } catch (error) {
+        console.error("Error: ", error);
+    }
+}
+
+
+Los callbacks son clave en JavaScript y se utilizan extensivamente para:
+
+    - Manejar eventos del usuario
+    - Operaciones asincronas
+    - Temporizadores
+    - Procesamiento de datos
+    - Comunicacion con servidores
+
+Aunque vayamos a usar promesas y async/await, entender los callbacks es fundamental para trabajar con JavaScript
+*/
+
+// TODO Callbacks vs High Order Functions, Destructuring, Spread Operator, Funciones anidadas, APIs en JavaScript y Web APIs
+
+
+
+/*==========================
+    Callbacks y HOF
+============================
+
+- Un callback es simplmeente una funcion que pasamos como argumento a otra funcion y que sera llamada en algun momento dentro de esa funcion. Es el USO CONCRETO de pasra una funcion como parametro
+
+- Una High Order Function (HOF) o Funcion de Alto Nivel es una funcion que cumple al menos alguna de estas dos condiciones
+
+    1. Recibe una o mas funciones como argumentos
+    2. Devuelve una funcion como resultado
+
+
+- Callback es la funcion pasada como argumento
+- High Order Function es la funcion que recibe o devuelve funciones
+- Un callback es usando dentro de una HOF PERO no todas las HOF usan callbacks (porque pueden devolver funciones en lugar de recibirlas)
+*/
+
+// Ejemplo HOF que recibe funcion
+// const numeros = [1, 2, 3, 4, 5];
+const cuadrados = numeros.map(num => num * num);
+// map es una HOF porque recibe un callback como argumento
+
+// Ejemplo HOF que devuelve funcion
+function multiplicador(factor) {
+    return function(x) {
+        return x * factor;
+    }
+}
+
+// A partir de esta funcion, puedo crear multiples funciones
+const duplicar = multiplicador(2);
+console.log(duplicar(5)); //10
+
+const triplicar = multiplicador(3);
+console.log(triplicar(3)); // 9
+
+
+/*==========================
+    Destructuring
+============================
+
+Destructuring o desestructuracion es una sintaxis que permite extraer valores de arrays o propiedades de objetos y asignarlos a variables de forma concisa
+
+Simplemente es una forma de "descomponer" estructuras de datos como arrays y objetos en variables individuales sin necesidad de acceder manualmente a cada elemento o propiedad
+
+    - Mejora la legibilidad dle codigo
+    - Facilita el acceso rapido a datos de estructuras complejas
+    - Reduce la verbosidad (menos lineas para obtener lo mismo)
+*/
+
+// Arrays sin destructuring
+const nums = [1, 2, 3];
+const prim = nums[0];
+const seg = nums[1];
+console.log(prim, seg); // 1 2
+
+// Arrays con destructuring
+const [uno, dos] = nums;
+console.log(uno, dos); // 1 2
+
+
+// Objetos sin destructuring
+const persona = { nombre: "Santiago", edad: 30 };
+const nom = persona.nombre;
+const eda = persona.edad;
+
+// Objetos con destructuring
+const { nombre, edad } = persona;
+console.log(nombre, edad); // Santiago 30
+
+
+// Asignar a nuevas variables
+const { nombre: n , edad: e} = persona;
+console.log(n, e); // // Santiago 30
+
+// Destructuring con valores por defecto
+const {nomb, ciudad = "Desconocida"} = {nomb: "Federico"};
+console.log(ciudad); // Desconocida
+
+// Desturcturing de arrays con valores omitidos
+const [primero, ,tercero] = [10, 20, 30];
+console.log(primero, tercero); // 10 30
+
+// Rest operator con destructuring en arrays
+const [a, ...resto] = [1, 2, 3, 4];
+console.log(a); // 1
+console.log(resto); // [2, 3, 4]
+
+
+// Rest operator con destructuring en objetos
+const {nombr, ...otros} = {nombr: "Fatima", ed: 35, pais: "Argentina"};
+console.log(otros); // {ed: 35, pais: 'Argentina'}
+
+
+
+
+/*==========================
+    Spread Operator
+============================
+
+El spread operator (operador de propagacion) denotado por "...", es una sintaxis introducida en ES6 (2015) que permite descomponer elementos iterables (arrays, strings y objetos) en elementos individuales/
+
+Su comportamiento varia segun el contexto en el que se uso, pero su principal funcion es copiar, combinar o expandir estructuras de datos de forma eficiente
+
+El speread operator trabaja a nivel de valores individuales, extrayendo cada elemento de un iterable y colocandolo en el contexto donde se usa. Cuando el interprete encuentra iterable:
+
+    1. Convieret el iterable en una secuencia de valores individuales
+    2. Propaga (spread) esos valores en el nuevo contexto
+    3. No modifica el original
+*/
+
+const arrayOriginal = [1, 2, 3];
+const arrayCopia = [...arrayOriginal];
+console.log(arrayCopia); // [1, 2, 3]
+
+///////////////////////
+// Copia superficial o Shallow Copy
+// Ojo porque no es una referencia, los cambios en arrayCopia no afectan al arrayOriginal. Pero solo copia un nivel, si hay objetos anidados, estos si cambian
+
+arrayCopia[0] = 10; // Con numeros simples no hay problema
+console.log(arrayCopia); // [10, 2, 3]
+console.log(arrayOriginal); // [1, 2, 3]
+
+const objOriginal = [
+    { apodo: "Cacho" }
+];
+
+const objCopia = [...objOriginal];
+
+console.log(objOriginal[0]); // {apodo: 'Cacho'}
+console.log(objCopia[0]); // {apodo: 'Cacho'}
+
+
+// Realizo una modificacion en apodo en la copia -> TAMBIEN VA A ALTERAR EL ORIGINAL!
+objCopia[0].apodo = "Castaña";
+
+// Tambien se modifica el objeto original
+console.log(objOriginal[0]); // {apodo: 'Castaña'}
+console.log(objCopia[0]); // {apodo: 'Castaña'}
+
+
+///////////////////////
+// Concatenacion de arrays
+const arr1 = [1, 2];
+const arr2 = [3, 4];
+const arrCombinado = [...arr1, ...arr2]; // Mas eficiente que concat(), mejor rendimiento
+console.log(arrCombinado); // [1, 2, 3, 4]
+
+
+///////////////////////
+// Convierte strings en arrays
+const str = "Hola";
+const chars = [...str]; // Misma operacion que con split('')
+console.log(chars); // ['H', 'o', 'l', 'a']
+
+
+///////////////////////
+// Combinacion de objetos
+const configDefecto = { tema: "oscuro", fontSize: 16};
+const configUser = { fontSize: 18 };
+const configFinal = {...configDefecto, ...configUser}; // Las propiedades posteriores sobreescriben a las anteriores
+console.log(configFinal); // {tema: 'oscuro', fontSize: 18}
+
+
+///////////////////////
+// Pasar argumentos desde un array
+function sum (a, b, c) {
+    return a + b + c;
+}
+
+const listaNumeros = [1, 2, 3];
+console.log(sum(...listaNumeros));
+
+
+///////////////////////
+// Recoger argumentos restantes
+function logArgs(first, ...rest) {
+    console.log(first); // 'a'
+    console.log(rest); // ['b', 'c']
+
+}
+
+logArgs("a", "b", "c");
+
+
+/*==========================
+    Funciones anidadas
+============================
+
+Una funcion anidada es simplemente una funcion definida dentro de otra funcion. Es una funcion:
+
+    - Se declara dentro de otra funcion
+    - Tiene acceso a todas las variables y parametros de su funcion externa
+    - Puede ser utiliza para organizar mejor el codigo, modularizar la logica
+
+Las funciones anidadas heredan el entorno lexico (lexical scope) de la funcion que las contiene. Esto significa que pueden acceder a las variables de la funcion externa, pero NO al reves
+*/
+
+function saludar (nombre) {
+    // construirMensaje() esta anidada dentro de saludar()
+    function construirMensaje() {
+        // Tiene acceso a nombre, aunque esta variable no se defina dentro de construir mensaje
+        return `Hola, ${nombre}` // Ejemplo de scope Lexico
+    }
+
+    return construirMensaje();
+}
+
+console.log(saludar("Juan")); // Hola, Juan
+
+
+// Esto nos permite organizar el codigo: En lugar de escribir una gran funcion, podemos definir sub-funciones internas para modularizar la logica
+
+function procesarTexto (texto) {
+    function limpiar(t) {
+        return t.trim().toLowerCase();
+    }
+
+    function contarPalabras(t) {
+        return t.split(/\s+/).length;
+    }
+
+    const limpio = limpiar(texto);
+    return contarPalabras(limpio);
+}
+
+console.log(procesarTexto("tres alegres y dicharacheros tigres comieron trigo de un trigal")); // 10
+```
 
 
 

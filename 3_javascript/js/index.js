@@ -1,206 +1,162 @@
 /*=======================
-    Callbacks
+    Asincronia II
 =========================
 
-Los callbacks son funciones que se pasan como argumentos a otras funciones y se ejecutan despues de que ocurra algun evento o se complete alguna operacion*/
+La asincronia es la capacidad de un programa de ejecutar tareas que toman tiempo (acceder a una API o esperar a un temporizador) SIN BLOQUEAR la ejecucion del resto del codigo
 
-// Ejemplo basico de callback
-function saludar(nombre, callback) {
-    console.log(`Hola ${nombre}`);
-    callback(); // Se ejecuta el callback
-}
+Esto es clave en JavaScripto porque es un lenguaje single-threaded (un solo hilo), lo que significa que solo puede ejecutar una tarea a la vez. Por eso, para evitar que el hilo principal se bloquee, se introducen mecanismos asincronicos que permiten "delegar" operaciones que tomaran tiempo y continuar ejecutando el resto del codigo mientras esas tareas se completan
 
-function despedirse() {
-    console.log("Nos vemos!");
-}
+EXTRA -> Call stack, Task queue y Event Loop
 
-saludar("Esteban", despedirse);
-// Hola Esteban
-// Nos vemos!
-
-// Ejemplo de callback con un temporizador
-/*
-setTimeout(() => {
-    console.log("Esto se ejecuta en 2 segundos")
-}, 2000);
-*/
+JavaScript nos aporta ciertas herramientas para la asincronia
 
 
-/*=========================================
-    Funciones como First Class Citizens
-===========================================
+/////////////////
+// 1. Callbacks: Funcion que se pasa como argumento para ejecutarse despues de completar una operacion
+    function procesoAsincronico(callback) {
+        console.log("Iniciando proceso asincrono...");
 
-Por que es que esto se produce? 
-En JavaScript, las funciones son "ciudadanas de primer clase", es decir, tiene prioridad y pueden ser
-
-    - Asignadas a variables
-    - Pasadas como argumentos
-    - Retornadas desde otras funciones
-*/
-
-
-/////////////////////
-// Asignar funcion a una variable
-const miCallback = function() {
-    console.log("Callback ejecutado");
-}
-
-// Pasamos esta funcion como argumento a otra funcion
-function ejecutarCallback(callback) {
-    callback(); // Aca invocamos a la funcion que pasamos por parametro
-}
-
-ejecutarCallback(miCallback); // Callback ejecutado
-
-
-/////////////////////
-// Sincronia vs Asincronia
-
-// Callback sincrono
-function procesoPesado(callback) {
-    console.log("Iniciando proceso pesado...");
-
-    // Simulamos un procesamiento que tarde unos segundos
-    for (let i = 0; i < 5000; i++) {
-        console.log("<- Vueltas de iteracion");
+        // El temporizador como vimos arriba es una funcion asincrona, entonces no traba todo el flujo hasta que termine, corre en paralelo y no molesta
+        setTimeout(function () {
+            callback();
+        }, 2000);
     }
 
-    // Cuando termine este proceso pesado de arriba, llamara a la funcion
-    callback(); // Aca imprimira "Proceso completado"
-}
 
-/*
-procesoPesado(function() {
-    console.log("Proceso completado");
-});
+/////////////////
+// 2. Promises: Las Promesas son objetos que representan un valor que puede estar disponible ahora, en el futuro, o nunca. Tiene un serie de estados
+    - Pending: Pendiente (Se esta realizando la conexion con la BBDD)
+    - Fulfilled: Completo (Se realizo exitosamente la conexion a la BBDD)
+    - Rejected: Rechazado (Fallo la conexion a la BBDD)
+
+
+Para trabajar con promesas, nos metemos con la Web API fetch que devuelve una promesa
+
+    // Con fetch puedo realizar una peticion HTTP GET para traer la info de esta url
+
+    // 1. Realizo la peticion a la URL
+    fetch("https://jsonplaceholder.typicode.com/users")
+        
+        // 2. Cuando termine de recibir (exitosamente) esta peticion, parseo el JSON
+        .then(res => res.json()) 
+
+        // 3. Si el parseo se realiza exitosamente, directamente trabajo con los datos
+        .then(data => {
+            // Ahora puedo hacer de todo con esta informacion ya parseada en mi codigo
+            console.table(data); // Entre otras operaciones que se me ocurran    
+        })
+
+        // En el caso de un error en alguno de los 3 pasos anteriores, lo capturo y lo veo por consola
+        .catch(error => console.error(error));
+
+En el caso anterior
+    1. fetch hace una peticion HTTP para obtener un recurso
+    2. fetch DEVUELVE una promesa que:
+        - Se resuelve con una response (respuesta del servidor)
+        - O se rechaza si hay un error
+
+
+Diferencia conceptual entre Promises y fetch
+
+fetch: 
+    - Es una funcion web API (para hacer peticiones HTTP)
+    - Devuelve una promesa
+    - Siempre trabaja de forma asincronica
+    - fetch usa promesa como mecanismo de manejo asincronico
+
+promesa:
+    - Es un objeto nativo de JS para manejar resultados asincronicos
+    - Es el resultado que devuelve fetch
+    - Devuelve un valor (exito o error futuro)
+
+
+========================
+    fetch()
+=========================
+
+fetch() es una funcion nativo en los navegadores modernos que nos permite realizar peticiones HTTP de forma asincronica usando promesas
+
+Forma parte de las Web APIs proporcionadas por el navegador. Vino a reemplazar al viejo y complejo metodo XMLHttpRequest
+
+Recordemos que una API es un conjunto de funciones o herramientas para interactuar con algo, las Web APIs son herramientas y funciones que el navegador nos entrega para interatuar con el y poder hacer multiples operaciones que no podemos hacer con el lenguaje JS com tal
+
+Con fetch podremos realizar peticiones HTTP para obtener recursos de una URL (tambien crear, modificar o eliminar recursos)
+
+- Devuelve un objeto Promise que se resuelve con un objeto Response
+- Usa el estandar HTTP: metodos como GET, POST, PUT DETE
+- Funciona bien con asnyc/await
+- Es mas limpiar y moderna que XMLHttpRequest
+- Soporta CORS, headers, envio de JSON y mas
+
+///////////////////
+// Sintaxis basica
+
+    fetch (url, options)
+        .then(response => {
+            // Respuesta cruda del servidor    
+        })
+
+        .catch(error => {
+            // Error de red o fallo total    
+        })
+
+Parametros:
+- url: string (La URL a la que queremos hacer una solicitud)
+- options: (opcional), objeto que especifica configuracion adicional como metodo HTTP, headers, body
 */
 
-// Cuando ejecutamos el proceso pesado, JavaScript no permitira continuar ejecutando el codigo y mostrando este console.log() hasta que haya terminado el proceso pesado de arriba. Esto traba la ejecucion del codigo
-console.log("Esto se ejecuta despues del callback");
+const contenedorDatos = document.getElementById("contenedorDatos");
 
 
-////////////////////////
-// Callback asincronico
-function procesoAsincronico(callback) {
-    console.log("Iniciando proceso asincrono...");
+// Realizo una peticion HTTP GET a la URL para obtener los usuarios que me ofrece este endpoint (url)
+fetch("https://jsonplaceholder.typicode.com/users") // Se realiza la solicitud de red
 
-    // El temporizador como vimos arriba es una funcion asincrona, entonces no traba todo el flujo hasta que termine, corre en paralelo y no molesta
-    setTimeout(function() {
-        callback();
-    }, 2000);
-}
+    // Necesito esperar a que haya terminado la conexion de red
+    .then(response => {
+        console.log(response); // Aca veo la respuesta HTTP del servidor
+        return response.json(); // Parseo el contenido del cuerpo de la respuesta del servidor
+    })
+    // Necesito esperar a que se produzca el parseo de informacion y tenga los datos en el objeto data
+    .then(data => {
+        console.table(data); // Compruebo por consola que recibo correctamente los datos de la URL
 
-procesoAsincronico(() => console.log("Proceso asincronico completado"));
+        let htmlUsuarios = "<ul>";
 
-console.log("Fin del proceso asincronico");
-
-console.log("Continuamos con el codigo");
-
-// Aca sucede el proceso contrario, el codigo asincronico no se queda deteniendo todo 2 segundos, sino que corre en paralelo y el resto del codigo puede seguir ejecutandose sin problema
-
-////////////////////////
-// Casos de usos comunes de callbacks:
-
-// 1. Temporizadores (Timers)
-setTimeout(() => console.log("Esto se ejecuta despues de 3 segundos"), 3000);
-
-
-// 2. Eventos del DOM
-const boton = document.getElementById("boton");
-
-boton.addEventListener("click", event => console.log("Boton clickeado ", event.target));
-
-
-// 3. Operaciones con Arrays
-const numeros = [1, 2, 3, 4, 5];
-
-numeros.forEach(function(numero, indice) {
-    console.log(`Indice: ${indice}, valor: ${numero}`);
-});
-
-/*
-const duplicados = numeros.map(function(numero) {
-    return numero * 2;
-})
-    */
-
-const duplicados = numeros.map(num => num * 2);
-console.log(duplicados); // [2, 4, 6, 8, 10]
-
-
-// 4. Peticiones HTTP (mas adelante)
-
-
-// Lectura de archivos (Node.js tambien mas adelante)
-
-
-/*==========================
-    Ventajas y Desventajas
-============================
-
-Ventajas
-    - Simplicidad: Facil de entender para operaciones simples
-    - Universalidad: Compatibilidad con todos los navegadores
-    - Flexibilidad: Permiten crear codigo reutilizable
-
-Desventajas
-    - Callback Hell: Anidamiento excesivo que dificulta la lectura
-    - Manejo de errores: Complicado con calbacks anidados
-    - Flujo de control: Dificil de seguir con operaciones complejas
-
-
-////////////////////////////
-// Ejemplo de callback hell
-
-// https://imgur.com/BtjZedW
-
-function procesoCompleto(callback) {
-    paso1(function(error, resultado1) {
-        if (error) return callback(error);
-            paso2(resultado1, function(error, resultado2) {
-                if (error) return callback(error);
-                    paso3(resultado2, function(error, resultado3) {
-                    if (error) return callback(error);
-                        paso4(resultado3, function(error, resultadoFinal) {
-                            if (error) return callback(error);
-                                callback(null, resultadoFinal);
-                });
-            });
+        data.forEach(user => {
+            htmlUsuarios += `<li>Nombre: ${user.name} / Email: ${user.email}</li>`;
         });
+
+        htmlUsuarios += "</ul>";
+
+        console.log(htmlUsuarios); // Ya con todo el HTML armado adentro de este string, lo renderizo
+
+        contenedorDatos.innerHTML = htmlUsuarios
+    })
+    // En caso de algun problema al realizarse la conexion de red o el parseo de datos, lo capturo aca y lo muestro por consola
+    .catch(error => {
+        console.log(error);
     });
-}
 
 
-///////////////////////////
-// Alternativas modernas
+/*==================
+    Response
+====================
 
-Para evitar el callback hell (anidamiento excesivo), se desarrollaron alternativas como
-    - Promesas: .then().catch()
-    - Async/Await: Sintaxis mas limpia y legible
+El objeto Response provee la siguiente informacion
 
-// Mismo ejemplo con async/await
-async function procesoCompleto() {
-    try {
-        const resultado1 = await paso1();
-        const resultado2 = await paso2(resultado1);
-        const resultado3 = await paso3(resultado2);
-        return resultadoFinal;
-    
-    } catch (error) {
-        console.error("Error: ", error);
-    }
-}
+    .ok: Booleano, nos da true si el status esta entre 200 y 299
+    .status: Codigo HTTP (200, 404, 500, etc)
+    .statusText: Texto del estado (OK, Not Found, Internal Server Error, etc)
+    .headers: Cabeceras HTTP de la respuesta
+    .json(), .text(), .blob(), .formData() para leer el contenido de la respuesta
 
 
-Los callbacks son clave en JavaScript y se utilizan extensivamente para:
+==========================
+    Manejo de errores
+=========================
 
-    - Manejar eventos del usuario
-    - Operaciones asincronas
-    - Temporizadores
-    - Procesamiento de datos
-    - Comunicacion con servidores
-
-Aunque vayamos a usar promesas y async/await, entender los callbacks es fundamental para trabajar con JavaScript
+- fetch() solo rechaza la promesa en errores de red reales (sin internet, servidor caido)
+- NO rechaza en codigos de error HTTP (404, o 500), por eso debemos revisar con response.ok
 */
 
-// TODO Callbacks vs High Order Functions, Destructuring, Spread Operator, Funciones anidadas, APIs en JavaScript y Web APIs
+// TODO: Continuar desde pag 8/17 Uso con aync/await
