@@ -1,5 +1,14 @@
 # UTN 2026 c2 Div 334
 
+## Videos recomendados
+### [Video recomendado de Bag of Milk](https://www.youtube.com/watch?v=RckI7mBhZvY)
+### [Protocolo HTTP y lenguaje HTML](https://www.youtube.com/watch?v=l6oF_RpBf64)
+### [Playlist de Todocode de Programacion Web](https://www.youtube.com/watch?v=lC6JOQLIgp0&list=PLQxX2eiEaqbxx6Ds5bd1F6LZJo7_OnZhV&index=3)
+    - Arquitectura Cliente/Servidor
+    - Protocolo HTTP
+    - Que es JSON
+    - Que son las APIs
+    
 ---
 
 ## Fecha 1er parcial / *20/10 modalidad tp asincrono*

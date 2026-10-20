@@ -4,7 +4,7 @@
 
 La asincronia es la capacidad de un programa de ejecutar tareas que toman tiempo (acceder a una API o esperar a un temporizador) SIN BLOQUEAR la ejecucion del resto del codigo
 
-Esto es clave en JavaScripto porque es un lenguaje single-threaded (un solo hilo), lo que significa que solo puede ejecutar una tarea a la vez. Por eso, para evitar que el hilo principal se bloquee, se introducen mecanismos asincronicos que permiten "delegar" operaciones que tomaran tiempo y continuar ejecutando el resto del codigo mientras esas tareas se completan
+Esto es clave en JavaScript porque es un lenguaje single-threaded (un solo hilo), lo que significa que solo puede ejecutar una tarea a la vez. Por eso, para evitar que el hilo principal se bloquee, se introducen mecanismos asincronicos que permiten "delegar" operaciones que tomaran tiempo y continuar ejecutando el resto del codigo mientras esas tareas se completan
 
 EXTRA -> Call stack, Task queue y Event Loop
 
@@ -74,16 +74,16 @@ promesa:
     fetch()
 =========================
 
-fetch() es una funcion nativo en los navegadores modernos que nos permite realizar peticiones HTTP de forma asincronica usando promesas
+fetch() es una funcion nativa en los navegadores modernos que nos permite realizar peticiones HTTP de forma asincronica usando promesas
 
 Forma parte de las Web APIs proporcionadas por el navegador. Vino a reemplazar al viejo y complejo metodo XMLHttpRequest
 
-Recordemos que una API es un conjunto de funciones o herramientas para interactuar con algo, las Web APIs son herramientas y funciones que el navegador nos entrega para interatuar con el y poder hacer multiples operaciones que no podemos hacer con el lenguaje JS com tal
+Recordemos que una API es un conjunto de funciones o herramientas para interactuar con algo, las Web APIs son herramientas y funciones que el navegador nos entrega para interatuar con el y poder hacer multiples operaciones que no podemos hacer con el lenguaje JS como tal
 
 Con fetch podremos realizar peticiones HTTP para obtener recursos de una URL (tambien crear, modificar o eliminar recursos)
 
 - Devuelve un objeto Promise que se resuelve con un objeto Response
-- Usa el estandar HTTP: metodos como GET, POST, PUT DETE
+- Usa el estandar HTTP: metodos como GET, POST, PUT, DELETE
 - Funciona bien con asnyc/await
 - Es mas limpiar y moderna que XMLHttpRequest
 - Soporta CORS, headers, envio de JSON y mas
@@ -107,7 +107,7 @@ Parametros:
 
 const contenedorDatos = document.getElementById("contenedorDatos");
 
-
+/*
 // Realizo una peticion HTTP GET a la URL para obtener los usuarios que me ofrece este endpoint (url)
 fetch("https://jsonplaceholder.typicode.com/users") // Se realiza la solicitud de red
 
@@ -117,6 +117,7 @@ fetch("https://jsonplaceholder.typicode.com/users") // Se realiza la solicitud d
         return response.json(); // Parseo el contenido del cuerpo de la respuesta del servidor
     })
     // Necesito esperar a que se produzca el parseo de informacion y tenga los datos en el objeto data
+
     .then(data => {
         console.table(data); // Compruebo por consola que recibo correctamente los datos de la URL
 
@@ -136,7 +137,7 @@ fetch("https://jsonplaceholder.typicode.com/users") // Se realiza la solicitud d
     .catch(error => {
         console.log(error);
     });
-
+*/
 
 /*==================
     Response
@@ -148,7 +149,7 @@ El objeto Response provee la siguiente informacion
     .status: Codigo HTTP (200, 404, 500, etc)
     .statusText: Texto del estado (OK, Not Found, Internal Server Error, etc)
     .headers: Cabeceras HTTP de la respuesta
-    .json(), .text(), .blob(), .formData() para leer el contenido de la respuesta
+    .json(), .()text, .blob(), .formData() para leer el contenido de la respuesta
 
 
 ==========================
@@ -159,4 +160,161 @@ El objeto Response provee la siguiente informacion
 - NO rechaza en codigos de error HTTP (404, o 500), por eso debemos revisar con response.ok
 */
 
-// TODO: Continuar desde pag 8/17 Uso con aync/await
+
+
+/*========================
+    async/await
+=========================
+
+async/await es una sintaxis mas sencilla para trabajar con promesas o Promises. En ingles se le llaman a estas soluciones mas sencillas de leer "syntactic sugar"
+
+Nos permite escribir codigo asincrono como si fuera condigo sincrono.
+El objetivo es hacer el manejo de la asincronia mas legible, estructurado y facil de depurar
+
+La keyword async se usa para declarar una fucnon asincrona, la cual SIEMPRE devuelve una promesa
+
+
+////////////////////
+// Comparacion con .then()
+
+function obtenerUsuarios() {
+    fetch(url)
+        .then(res => res.json())
+        .then(data => console.table(data))
+        .catch(error => console.error(error));
+}
+
+
+async function obtenerAlbums() {
+
+    try {
+        const response = await fetch(url);
+    
+        const data = await response.json();
+        console.table(data);
+    
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+
+
+
+////////////////////
+// Ventajas del async/await
+
+    - Mas legible y secuencial
+    - Mejor manejo de errores con try/catch
+    - Ideal para flujos largos y complejos de asincronia
+
+
+
+
+////////////////////
+// Que pasa internamente cuando usamos await?
+
+1. JavaScript evalua la expresion que devuelve una promesa
+2. Suspende la ejecucion de la funcion hasta que la promesa se resuelva o se rechace
+3. Si se resuelve, se continua con el valor
+4. Si se rechaza, lanza un error que puede ser atrapado con try...catch
+*/
+
+// con async declaramos una funcion asincrona que retorna una promesa
+async function obtenerAlbums() {
+    try {
+        // con await detenemos la ejecucion del codigo hasta que fetch termine
+        const response = await fetch("https://jsonplaceholder.typicode.com/albums");
+        console.log(response);
+    
+        // con await detenemos la ejecucion del codigo hasta que hayamos parseado el JSON del cuerpo de la respuesta
+        const data = await response.json();
+        console.table(data);
+
+    } catch (error) {
+        console.error("Error: ", error)
+    }
+}
+
+// obtenerAlbums();
+
+
+/*========================
+    try...catch
+=========================
+
+Es una estructura de control utilizada para capturar y manejar errores que ocurren durante la ejecucion de bloques de codigo. Esta tecnica forma parte de manejo de excepciones en JavaScript
+
+Su objetivo es evitar que errores inesperados detengan la ejecucion del programa y en su lugar manejar los errores de forma controlada
+
+    try {
+        // Bloque de codigo que puede lanzar errores
+
+    } catch (error) {
+        // Codigo para manejar el error 
+
+    } finally {
+        // Bloque opcional que ejecuta siempre el codigo 
+    }
+
+
+try...catch captura errores en tiempo de ejecucion (runtime) como
+
+    - Acceso a variables no definidas
+    - Llamadas a funciones inexistentes
+    - Errores lanzados con throw
+    - Problemas en funciones JSON.parse(), eval(), etc
+
+NO captura errores de sintaxis, porque estos impiden que el codigo se ejecute
+
+
+//////////////////////
+// Como funciona internamente?
+
+    1. El bloque try se ejecuta normalmente
+
+    2. Si ocurre un error dentro del try, se detiene inmediatamente la ejecucion y pasa al bloque catch
+
+    3. El objeto de error (por convencion error, e), contiene informacion como:
+
+        .name: tipo de error (TypeError, ReferenceError, etc)
+        .message: mensaje descriptivo
+        .stack: pila de llamadas (stack trace)
+
+    4. El bloque finally si existe, siempre se ejecuta ocurra o no un error
+
+
+//////////////////
+// throw
+
+Con throw podemos lanzar nuestros propios errores, para validaciones o control de flujo
+
+
+//////////////////
+// Por que no usar try...catch en exceso?
+
+    - Puede ocultar errores reales si no se maneja correctamente
+    - Tiene costo de rendimiento, especialmente en bucles
+    - Es mejor usarlo en secciones donde hay riesgo real de erro (I/O, parsing, red, etc)
+
+
+
+////////////////////
+// Buenas practicas
+    - No atrapemos errores que no podemos manejar
+    - Usemos try...catch donde esperemos errores (parsear datos, llamadas a APIs)
+    - Usar finally para cerrar recursos, limpiar o terminar tareas (conexiones, indicadores de carga, etc)
+    - Siempre proporcionemos informacion util en el error (e.message)
+*/
+
+try {
+    const resultado = 10 / 0;
+    console.log(resultado); // Infinity
+    throw new Error("Error personalizado!");
+
+} catch (error) {
+    console.error("Ocurrio un error: ", error.message);
+
+} finally {
+    console.log("Esto se ejecuta siempre");
+}
