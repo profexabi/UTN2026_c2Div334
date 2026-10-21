@@ -73,3 +73,39 @@ const nombreArchivo = path.basename(rutaArchivo);
 
 console.log("El nombre del archivo es: ", nombreArchivo);
 console.log("test");
+
+
+
+/*=========================
+    os
+=========================
+
+El modulo os (Operative System) nos permite obtener informacion del sistema operativo en el que estamos ejecutando Node.js.
+
+Podemos obtener la cantidad de memoria libre disponible o el tipo de Sistema Operativo
+*/
+
+const os = require("os");
+
+const memoriaLibre = os.freemem();
+const tipoSistema = os.type();
+
+console.log(`Memoria libre: `, memoriaLibre);
+console.log(`Tipo de sistema operativo: `, tipoSistema);
+
+
+/*========================
+    Modulos en Node.js
+==========================
+
+Cada vez que usamos require() estamos "importando" un modulo para que podamos utilizar sus funciones en nuestro archivo actual
+
+Por supuesto podemos crear nuestros propios modulos
+
+Los modulos nos permiten organizar mejor nuestro codigo, evitando que todo este en un solo archivo y permitiendo que podamos reutilizar funciones o clases en diferentes partes de nuestro proyecto
+*/
+
+// Vamos a utilizar la funcion saludar que exportamos en saludos.js
+const saludar = require("./saludos");
+
+console.log(saludar(`Juan`)); // Hola, Juan! -> Estamos reutilizando codigo y funciones de otros archivos de nuestro proyecto

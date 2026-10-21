@@ -32,3 +32,16 @@ servidor.listen(puerto, () => {
 });
 
 // Detengo la ejecucion de mi servidor con Ctrl + c
+
+/* Que pasa aca?
+
+    - Importamos el modulo http: Este nos da acceso a todas las funcionalidades necesarias para poder crear un servidor
+
+    - Creamos un servidor: Utilizamos el metodo http.createServer para definir un servidor que escuche las solicitudes de los clientes y les responda
+
+    - Definimos la respuesta del servidor: Nuestro servidor siempre respondera con el mensaje "Hola mundo desde Node.js"
+
+
+    - Escucahmso en un puerto: El servidor se ejecuta en el puerto 3000 (pero puede ser cualquier puerto libre) y muestra un mensaje en la consola cuando esta listo
+
+*/
