@@ -107,37 +107,56 @@ Parametros:
 
 const contenedorDatos = document.getElementById("contenedorDatos");
 
-/*
-// Realizo una peticion HTTP GET a la URL para obtener los usuarios que me ofrece este endpoint (url)
-fetch("https://jsonplaceholder.typicode.com/users") // Se realiza la solicitud de red
+function obtenerUsers() {
+    
+    // Realizo una peticion HTTP GET a la URL para obtener los usuarios que me ofrece este endpoint (url)
+    fetch("https://jsonplaceholder.typicode.com/users") // Se realiza la solicitud de red
+    
+        // Necesito esperar a que haya terminado la conexion de red
+        .then(response => {
+            console.log(response); // Aca veo la respuesta HTTP del servidor
+            /*
+            Response {
+                body: (...)
+                bodyUsed: true
+                headers: Headers {}
+                ok: true
+                redirected: false
+                status: 200
+                statusText: ""
+                type: "cors"
+                url: "https://jsonplaceholder.typicode.com/users"
+            }
+            */
 
-    // Necesito esperar a que haya terminado la conexion de red
-    .then(response => {
-        console.log(response); // Aca veo la respuesta HTTP del servidor
-        return response.json(); // Parseo el contenido del cuerpo de la respuesta del servidor
-    })
-    // Necesito esperar a que se produzca el parseo de informacion y tenga los datos en el objeto data
-
-    .then(data => {
-        console.table(data); // Compruebo por consola que recibo correctamente los datos de la URL
-
-        let htmlUsuarios = "<ul>";
-
-        data.forEach(user => {
-            htmlUsuarios += `<li>Nombre: ${user.name} / Email: ${user.email}</li>`;
+            // Estamos parseando los datos dentro de Response { body: (...) } -> Este JSON lo convertimos a array de objetos
+            return response.json(); // Parseo el contenido del cuerpo (body) de la respuesta del servidor (HTTP Response)
+        })
+        // Necesito esperar a que se produzca el parseo de informacion y tenga los datos en el objeto data
+    
+        .then(data => {
+            console.table(data); // Compruebo por consola que recibo correctamente los datos de la URL
+    
+            let htmlUsuarios = "<ul>";
+    
+            data.forEach(user => {
+                htmlUsuarios += `<li>Nombre: ${user.name} / Email: ${user.email}</li>`;
+            });
+    
+            htmlUsuarios += "</ul>";
+    
+            console.log(htmlUsuarios); // Ya con todo el HTML armado adentro de este string, lo renderizo
+    
+            contenedorDatos.innerHTML = htmlUsuarios
+        })
+        // En caso de algun problema al realizarse la conexion de red o el parseo de datos, lo capturo aca y lo muestro por consola
+        .catch(error => {
+            console.error(error);
         });
+}
 
-        htmlUsuarios += "</ul>";
+obtenerUsers();
 
-        console.log(htmlUsuarios); // Ya con todo el HTML armado adentro de este string, lo renderizo
-
-        contenedorDatos.innerHTML = htmlUsuarios
-    })
-    // En caso de algun problema al realizarse la conexion de red o el parseo de datos, lo capturo aca y lo muestro por consola
-    .catch(error => {
-        console.log(error);
-    });
-*/
 
 /*==================
     Response
@@ -171,7 +190,7 @@ async/await es una sintaxis mas sencilla para trabajar con promesas o Promises. 
 Nos permite escribir codigo asincrono como si fuera condigo sincrono.
 El objetivo es hacer el manejo de la asincronia mas legible, estructurado y facil de depurar
 
-La keyword async se usa para declarar una fucnon asincrona, la cual SIEMPRE devuelve una promesa
+La keyword async se usa para declarar una funcion asincrona, la cual SIEMPRE devuelve una promesa
 
 
 ////////////////////
@@ -214,21 +233,22 @@ async function obtenerAlbums() {
 ////////////////////
 // Que pasa internamente cuando usamos await?
 
-1. JavaScript evalua la expresion que devuelve una promesa
-2. Suspende la ejecucion de la funcion hasta que la promesa se resuelva o se rechace
-3. Si se resuelve, se continua con el valor
-4. Si se rechaza, lanza un error que puede ser atrapado con try...catch
+    1. JavaScript evalua la expresion que devuelve una promesa
+    2. Suspende la ejecucion de la funcion hasta que la promesa se resuelva o se rechace
+    3. Si se resuelve, se continua con el valor
+    4. Si se rechaza, lanza un error que puede ser atrapado con try...catch
 */
 
 // con async declaramos una funcion asincrona que retorna una promesa
 async function obtenerAlbums() {
+    // Bloque de codigo que puede lanzar errores
     try {
         // con await detenemos la ejecucion del codigo hasta que fetch termine
         const response = await fetch("https://jsonplaceholder.typicode.com/albums");
-        console.log(response);
+        console.log(response); // Response {type: 'cors', url: 'https://jsonplaceholder.typicode.com/albums', redirected: false, status: 200, ok: true, …}
     
         // con await detenemos la ejecucion del codigo hasta que hayamos parseado el JSON del cuerpo de la respuesta
-        const data = await response.json();
+        const data = await response.json(); // Parseo el contenido del cuerpo de la respuesta del servidor
         console.table(data);
 
     } catch (error) {
@@ -236,7 +256,7 @@ async function obtenerAlbums() {
     }
 }
 
-// obtenerAlbums();
+obtenerAlbums();
 
 
 /*========================

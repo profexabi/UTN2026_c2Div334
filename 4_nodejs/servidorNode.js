@@ -1,6 +1,6 @@
 /*=========================
     http
-=========================
+===========================
 
 Este modulo es crucial para trabajar con servidores y manejar peticiones HTTP. 
 Es la base para cualquier aplicacion web en Node.js
@@ -35,13 +35,13 @@ servidor.listen(puerto, () => {
 
 /* Que pasa aca?
 
-    - Importamos el modulo http: Este nos da acceso a todas las funcionalidades necesarias para poder crear un servidor
+    - Importamos el modulo http: Este nos da acceso a todas las funcionalidades necesarias para poder crear un servidor en Node.js
 
     - Creamos un servidor: Utilizamos el metodo http.createServer para definir un servidor que escuche las solicitudes de los clientes y les responda
 
     - Definimos la respuesta del servidor: Nuestro servidor siempre respondera con el mensaje "Hola mundo desde Node.js"
 
 
-    - Escucahmso en un puerto: El servidor se ejecuta en el puerto 3000 (pero puede ser cualquier puerto libre) y muestra un mensaje en la consola cuando esta listo
+    - Escuchamos en un puerto: El servidor se ejecuta en el puerto 3000 (pero puede ser cualquier puerto libre) y muestra un mensaje en la consola cuando esta listo
 
 */

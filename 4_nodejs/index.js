@@ -29,11 +29,12 @@ Podemos leer, escribir, actualizar y borrar archivos de forma sencilla
 La lectura de archivos es una operacion asincrona!
 */
 
+// Es el equivalente a hacer en el navegador const console = require("console"); o import console from "browser";
 // Importamos el modulo file system para poder interactuar con el sistema de archivos
-const fs = require("fs"); // Ahora la variable fs contendra todos los metodos del modulo
+const fs = require("fs"); // Ahora la variable fs contendra todos los metodos del modulo file system
 
 // Vamos a leer un archivo de texto -> ubicado en archivos/leeme.txt
-fs.readFile("archivos/leeme.txt", "utf8", (err, data) => {
+fs.readFile("archivos/leeme.txt", "utf8", (err, data) => { // OPERACION ASINCRONICA!
     if (err) {
         console.log("Ocurrio un error: ", err);
         return; // Esta keyword termina con la ejecucion de este bloque de codigo (no sigue ejecutando el codigo de abajo)
@@ -108,4 +109,4 @@ Los modulos nos permiten organizar mejor nuestro codigo, evitando que todo este 
 // Vamos a utilizar la funcion saludar que exportamos en saludos.js
 const saludar = require("./saludos");
 
-console.log(saludar(`Juan`)); // Hola, Juan! -> Estamos reutilizando codigo y funciones de otros archivos de nuestro proyecto
+console.log(saludar(`Federico`)); // Hola, Federico! -> Estamos reutilizando codigo y funciones de otros archivos de nuestro proyecto
