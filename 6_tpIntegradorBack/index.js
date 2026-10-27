@@ -1,12 +1,22 @@
-// Importaciones
+/*==================
+    Importaciones
+==================*/
 import express from "express";
 
-const app = express();
+// Creamos una instancia de aplicacion de express, app contendra ahora todos los metodos que necesitaremos para crear un servidor
+const app = express(); 
+const PORT = 3000;
 
+
+/*==================
+    Endpoints -> (URL + Verbo HTTP + Logica)
+==================*/
 app.get("/", (req, res) => {
-    res.send("Hola mundo desde proyecto integrador back");
+    res.send("Hola mundo desde Express.js");
 });
 
-app.listen(3000, () => {
-    console.log(`Servidor corriendo en el puerto 3000`)
+
+
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
