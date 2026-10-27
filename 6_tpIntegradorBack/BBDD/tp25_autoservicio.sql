@@ -34,7 +34,7 @@ CREATE TABLE `products` (
   `category` enum('food','drink') NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `products`
@@ -92,7 +92,7 @@ INSERT INTO `products` (`id`, `name`, `image`, `category`, `price`, `active`) VA
 CREATE TABLE `product_sales` (
   `product_id` int NOT NULL,
   `sale_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `product_sales`
@@ -124,7 +124,7 @@ CREATE TABLE `sales` (
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `total_price` decimal(10,2) NOT NULL,
   `user_name` varchar(240) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `sales`
@@ -148,7 +148,7 @@ CREATE TABLE `users` (
   `name` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `users`
