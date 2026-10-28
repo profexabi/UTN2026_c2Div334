@@ -16,8 +16,12 @@
 # Cronograma clases
 
 ## Prox clase
-- EXTRA / Ver estructuras de datos mas complejas
-- EXTRA / Iteracion de objetos
+- Vistas para consumir los endpoints
+    - GET all products
+    - GET product by id
+
+- Endpoints POST, PUT y DELETE
+- Vistas para POST, PUT y DELETE
 
 ---
 
