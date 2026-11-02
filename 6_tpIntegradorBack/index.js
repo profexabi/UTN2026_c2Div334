@@ -4,10 +4,26 @@
 import express from "express";
 import environments from "./src/api/config/environments.js"; // Traigo el puerto del .env
 import connection from "./src/api/database/db.js";
+import cors from "cors";
 
 // Creamos una instancia de aplicacion de express, app contendra ahora todos los metodos que necesitaremos para crear un servidor
 const app = express(); 
 const PORT = environments.port;
+
+
+
+/*==================
+    Middlewares
+==================*/
+app.use(cors()); // Middleware CORS basico para permitir todas las solicitudes
+
+// Middleware logger para analizar por consola todas las solicitudes
+app.use((req, res, next) => {
+    const fecha = new Date();
+    console.log(`[${fecha.toLocaleDateString()} ${fecha.toLocaleTimeString()}] ${req.method} ${req.url}`);
+    next(); // Damos paso al siguiente middleware o a procesar la response
+});
+
 
 
 /*==================
@@ -42,6 +58,7 @@ app.get("/api/products/:id", async (req, res) => {
         payload: rows
     })
 });
+
 
 // TO DO
 // app.post("/api/product") -> donde recibira el contenido de un formulario html

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principal</title>
+
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+    <!-- Preset CSS -->
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+
+    <!-- CSS Externo -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    
+    <header>
+        <div class="logo-container">
+            <img class="logo-header" src="img/logo.jpg" alt="logo">
+        </div>
+
+        <nav>
+            <ul>
+                <li class="li-header">
+                    <a href="index.html">Principal</a>
+                </li>
+
+                <li class="li-header">
+                    <a href="get.html">Obtener</a>
+                </li>
+
+                <li class="li-header">
+                    <a href="post.html">Crear</a>
+                </li>
+
+                <li class="li-header">
+                    <a href="put.html">Modificar</a>
+                </li>
+
+                <li class="li-header">
+                    <a href="delete.html">Eliminar</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="contenedor-productos"></section>
+    </main>
+
+    <script>
+        const urlBase = "http://localhost:3000";
+        const contenedorProductos = document.getElementById("contenedor-productos");
+
+        async function obtenerProductos() {
+            try {
+                const response = await fetch(`${urlBase}/api/products`);
+                console.log(response); // Mostramos la respuesta cruda del servidor
+
+                // Parseamos el JSON de los productos del body de la HTTP Response que nos trae el servidor
+                const data = await response.json();
+
+                const productos = data.payload;
+                
+                renderizarProductos(productos);
+
+            } catch (error) {
+                // Estos errores son errores REALES de red, no capturan 404, 500, etc
+                console.error("Error al obtener productos: ", error);
+            }
+        }
+
+        function renderizarProductos(array) {
+            let htmlProductos = "";
+
+            array.forEach(producto => {
+                htmlProductos += `
+                    <div class="card-producto">
+                        <img class="card-img" src="${producto.image}" alt="${producto.name}">
+                        <h4>${producto.name}</h4>
+                        <p>Id: ${producto.id}</p>
+                        <p>$ ${producto.price}</p>
+                    </div>
+                `;
+            });
+
+            contenedorProductos.innerHTML = htmlProductos;
+        }
+
+        obtenerProductos();
+    </script>
+</body>
+</html>

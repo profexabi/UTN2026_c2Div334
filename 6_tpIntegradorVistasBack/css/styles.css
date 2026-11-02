@@ -1,0 +1,79 @@
+/* ================
+    Variables
+================ */
+:root {
+    --naranja-principal: #fc6d01;
+    --amarillo-principal: #ffb300;
+    --beige-principal: #fcf8ec;
+}
+
+/* ================
+    Generales
+================ */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 0 !important;
+}
+
+ul {
+    padding-left: 0;
+    list-style-type: none;
+}
+
+.logo-header {
+    width: 64px;
+    border-radius: 50%;
+}
+
+#contenedor-productos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+
+/* ================
+    Tarjetas
+================ */
+.card-producto {
+    width: 160px;
+    border: 2px solid var(--naranja-principal);
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.card-producto h4, .card-producto p {
+    margin: 0;
+}
+
+.card-producto h4 {
+    font-size: 16px;
+    color: var(--amarillo-principal);
+}
+
+.card-producto p {
+    font-size: 14px;
+}
+
+.card-img, .img-listados {
+    width: 80px;
+    height: 80px;
+}
+
+
+/* ================
+    Listados
+================ */
+.listados-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}

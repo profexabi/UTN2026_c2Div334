@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar</title>
+
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+    <!-- Preset CSS -->
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+
+    <!-- CSS Externo -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    
+    <header>
+        <div class="logo-container">
+            <img class="logo-header" src="img/logo.jpg" alt="logo">
+        </div>
+
+        <nav>
+            <ul>
+                <li class="li-header">
+                    <a href="index.html">Principal</a>
+                </li>
+
+                <li class="li-header">
+                    <a href="get.html">Obtener</a>
+                </li>
+
+                <li class="li-header">
+                    <a href="post.html">Crear</a>
+                </li>
+
+                <li class="li-header">
+                    <a href="put.html">Modificar</a>
+                </li>
+
+                <li class="li-header">
+                    <a href="delete.html">Eliminar</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h3>Consultar producto por id</h3>
+        
+        <!-- Formulario obtener producto por id -->
+        <form id="getProductForm">
+            <label for="idProd">Id producto</label>
+            <input type="number" name="id" id="idProd" min="1" required>
+
+            <input type="submit" value="Consultar">
+        </form>
+
+        <section id="contenedor-productos"></section>
+    </main>
+
+    <script>
+        const urlBase = "http://localhost:3000";
+        const contenedorProductos = document.getElementById("contenedor-productos");
+        const getProductForm = document.getElementById("getProductForm");
+
+        // Al hacer click en Consultar, hacemos un callback asincrono para pegarle a http://localhost:3000/api/products/x
+        getProductForm.addEventListener("submit", async (event) => {
+            event.preventDefault(); // Evitamos el envio por defecto del formulario
+
+            // console.log(event.target);
+
+            // Extraemos el valor del campo con id idProd
+            const idProd = event.target.idProd.value.trim();
+            console.log(idProd); // Vemos por consola el valor de id extraido del <form> para parsarselo a la url en el fetch
+
+            try {
+                const response = await fetch(`${urlBase}/api/products/${idProd}`);
+                console.log(response);
+
+                // Accemos al JSON dentro del cuerpo de la respuesta y lo convertimos a objeto JS
+                const data = await response.json(); 
+
+                const producto = data.payload[0]; // Traigo el primer objeto de mi array (de 1 solo objeto)
+
+                renderizarProducto(producto);
+
+            } catch (error) {
+                // Estos errores son errores REALES de red, no capturan 404, 500, etc
+                console.error("Error al obtener productos: ", error);
+            }
+        });
+
+        function renderizarProducto(producto) {
+            let htmlProducto = `
+                <ul class="listados-container">
+                    <li class="li-listados">
+                        <img src="${producto.image}" alt="${producto.name}" class="img-listados">
+                    </li>
+                    <li class="li-listados">
+                        Id: ${producto.id} / Nombre: ${producto.name} / <strong>Precio: $${producto.price}</strong>
+                    </li>
+                </ul>
+            `;
+
+            contenedorProductos.innerHTML = htmlProducto;
+        }
+    </script>
+</body>
+</html>
