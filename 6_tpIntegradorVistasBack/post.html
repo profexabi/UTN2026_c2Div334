@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar</title>
+
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+    <!-- Preset CSS -->
+    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
+
+    <!-- CSS Externo -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img class="logo-header" src="img/logo.jpg" alt="logo">
+        </div>
+
+        <nav>
+            <ul>
+                <li class="li-header">
+                    <a href="index.html">Principal</a>
+                </li>
+
+                <li class="li-header">
+                    <a href="get.html">Obtener</a>
+                </li>
+
+                <li class="li-header">
+                    <a href="post.html">Crear</a>
+                </li>
+
+                <li class="li-header">
+                    <a href="put.html">Modificar</a>
+                </li>
+
+                <li class="li-header">
+                    <a href="delete.html">Eliminar</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Formulario POST product -->
+        <section class="createProduct-container">
+
+            <h3>Crear producto</h3>
+
+            <form id="createProductForm">
+
+                <label for="categoryProd">Categoria</label>
+                <select name="category" id="categoryProd" required>
+                    <option value="food">Comida</option>
+                    <option value="drink">Bebida</option>
+                </select>
+
+                <label for="imageProd">Imagen</label>
+                <input type="text" name="image" id="imageProd" required>
+
+                <label for="nameProd">Nombre</label>
+                <input type="text" name="name" id="nameProd" required>
+
+                <label for="priceProd">Precio</label>
+                <input type="number" name="price" id="priceProd" min="1" required>
+
+                <input type="submit" value="Crear producto">
+
+            </form>
+
+        </section>
+
+        <section id="contenedor-productos"></section>
+    </main>
+
+    <script>
+        const urlBase = "http://localhost:3000";
+        const contenedorProductos = document.getElementById("contenedor-productos");
+        const getProductForm = document.getElementById("getProductForm");
+        const createProductForm = document.getElementById("createProductForm");
+
+        createProductForm.addEventListener("submit", async event => {
+            
+            event.preventDefault(); // Evitamos el envio por defecto del <form>
+
+            // Obtenemos todo el contenido del <form> en un objeto FormData
+            const formData = new FormData(event.target);
+            console.log(formData); 
+            // FormData(4) { category → "drink", image → "urlcualca", name → "Fernet Chabona", price → "12345" }
+
+            // Creamos un objeto literal de JavaScript para poder parsearlo en JSON y meterlo en el cuerpo de la peticion HTTP
+            const formObj = Object.fromEntries(formData.entries());
+            console.log(formObj); 
+            // {category: 'food', image: 'https://comedera.com/wp-content/uploads/sites/9/20…08/Chipa.jpg?fit=150,125&crop=0px,0px,150px,150px', name: 'Cono de papas fritas', price: '12345'}
+            
+            
+            // Este es el contenido que ira en el body de la request
+            console.log(JSON.stringify(formObj)); 
+            // {"category":"food","image":"https://comedera.com/wp-content/uploads/sites/9/2023/08/Chipa.jpg?fit=150,125&crop=0px,0px,150px,150px","name":"Cono de papas fritas","price":"12345"}
+
+            try {
+                const response = await fetch(`${urlBase}/api/products`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formObj)
+                });
+
+                const data = await response.json(); // Ahora podre acceder al contenido de la respuesta
+
+                console.log(data.message);
+                alert(data.message);
+
+
+
+            } catch (error) {
+                // Estos errores son errores REALES de red, no capturan 404, 500, etc
+                console.error("Error al obtener productos: ", error);
+            }
+
+    })
+
+    </script>
+</body>
+
+</html>

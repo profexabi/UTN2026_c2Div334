@@ -107,6 +107,40 @@
             `;
 
             contenedorProductos.innerHTML = htmlProducto;
+
+            // Seleccionamos el boton eliminar y le asignamos el evento click que haga que podamos hacer la peticion HTTP DELETE con fetch
+            const btnEliminar = document.getElementById("btn-eliminar");
+            btnEliminar.addEventListener("click", () => {
+                
+                const confirmacion = confirm("Queres eliminar este producto?");
+
+                if (!confirmacion) {
+                    alert("Eliminacion cancelada");
+                } else {
+                    eliminarProducto(producto.id);
+                }
+            });
+        }
+
+        async function eliminarProducto(id) {
+            try {
+                const response = await fetch(`${urlBase}/api/products/${id}`, {
+                    method: "DELETE"
+                });
+
+                console.log(response); // Respuesta cruda del servidor
+
+                const data = await response.json(); // Ahora podemos acceder al valor de message
+
+                console.log(data.message);
+                alert(data.message);
+
+                // Limpiamos visualmente el listado del producto eliminado
+                contenedorProductos.innerHTML = "";
+
+            } catch (error) {
+                console.error("Erro al eliminar un producto: ", error);
+            }
         }
     </script>
 </body>

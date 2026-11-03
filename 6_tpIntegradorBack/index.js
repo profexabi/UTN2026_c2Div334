@@ -17,6 +17,8 @@ const PORT = environments.port;
 ==================*/
 app.use(cors()); // Middleware CORS basico para permitir todas las solicitudes
 
+app.use(express.json()); // Cuando enviamos informacion en el cuerpo del body de la request (POST y PUT) este middleware parseara el JSON recibido y lo recibiremos en el endpoint ya como un objeto
+
 // Middleware logger para analizar por consola todas las solicitudes
 app.use((req, res, next) => {
     const fecha = new Date();
@@ -60,12 +62,55 @@ app.get("/api/products/:id", async (req, res) => {
 });
 
 
-// TO DO
-// app.post("/api/product") -> donde recibira el contenido de un formulario html
+// POST create new product
+app.post("/api/products", async (req, res) => {
+    // Gracias al middleware app.use(express.json()) el JSON recibido del formulario ya viene transformado en objeto JS
 
-// app.put("/api/products/:id")
+    // Aca ya directamente recibimos un objeto
+    const {category, image, name, price} = req.body; // Extraemos los valores parseados del cuerpo de la peticion HTTP
 
-// app.delete("/api/product/:id")
+    const sql = "INSERT INTO products (name, image, category, price) VALUES (?, ?, ?, ?)";
+
+    await connection.query(sql, [name, image, category, price]);
+
+    res.status(201).json({
+        message: "Producto creado exitosamente"
+    });
+});
+
+
+// PUT product
+app.put("/api/products", async (req, res) => {
+
+    // Gracias al middleware app.use(express.json()) el JSON recibido del formulario ya viene transformado en objeto JS
+    const {id, name, image, price, category} = req.body;
+
+    const sql = "UPDATE products SET name = ?, image = ?, price = ?, category = ? WHERE id = ?";
+
+    await connection.query(sql, [name, image, price, category, id]);
+
+    res.status(200).json({
+        message: "Producto actualizado exitosamente"
+    });
+})
+
+
+
+// DELETE product
+app.delete("/api/products/:id", async (req, res) => {
+    const id = req.params.id;
+
+    // Los placeholders -> "?" nos ayudan a evitar los ataques de inyeccion SQL. Es nuestra manera de hacer consultas SQL mas seguras
+    const sql = "DELETE FROM products WHERE id = ?";
+    await connection.query(sql, [id]);
+
+    res.status(200).json({
+        message: `Producto con id ${id} eliminado exitosamente`
+    });
+});
+
+
+
 
 
 

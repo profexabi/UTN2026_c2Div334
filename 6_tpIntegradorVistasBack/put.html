@@ -55,21 +55,23 @@
 
             <input type="submit" value="Consultar">
         </form>
-
+        
         <section id="contenedor-productos"></section>
+        <section id="contenedor-form"></section>
     </main>
-
+    
     <script>
         const urlBase = "http://localhost:3000";
         const contenedorProductos = document.getElementById("contenedor-productos");
+        const contenedorForm = document.getElementById("contenedor-form");
         const getProductForm = document.getElementById("getProductForm");
 
         // Al hacer click en Consultar, hacemos un callback asincrono para pegarle a http://localhost:3000/api/products/x
         getProductForm.addEventListener("submit", async (event) => {
             event.preventDefault(); // Evitamos el envio por defecto del formulario
-
+            
             // console.log(event.target);
-
+            
             // Extraemos el valor del campo con id idProd
             const idProd = event.target.idProd.value.trim();
             console.log(idProd); // Vemos por consola el valor de id extraido del <form> para parsarselo a la url en el fetch
@@ -77,14 +79,14 @@
             try {
                 const response = await fetch(`${urlBase}/api/products/${idProd}`);
                 console.log(response);
-
+                
                 // Accemos al JSON dentro del cuerpo de la respuesta y lo convertimos a objeto JS
                 const data = await response.json(); 
-
+                
                 const producto = data.payload[0]; // Traigo el primer objeto de mi array (de 1 solo objeto)
-
+                
                 renderizarProducto(producto);
-
+                
             } catch (error) {
                 // Estos errores son errores REALES de red, no capturan 404, 500, etc
                 console.error("Error al obtener productos: ", error);
@@ -99,15 +101,100 @@
                     </li>
                     <li class="li-listados">
                         Id: ${producto.id} / Nombre: ${producto.name} / <strong>Precio: $${producto.price}</strong>
-                    </li>
-                    <li class="li-listados">
-                        <button id="btn-modificar">Modificar</button>
-                    </li>
-                </ul>
+                        </li>
+                        <li class="li-listados">
+                            <button id="btn-modificar">Modificar</button>
+                            </li>
+                            </ul>
+                            `;
+                            
+                            contenedorProductos.innerHTML = htmlProducto;
+
+            const btnModificar = document.getElementById("btn-modificar");
+            btnModificar.addEventListener("click", () => {
+
+                const confirmacion = confirm("Querés modificar este producto?");
+
+                if (!confirmacion) {
+                    alert("Modificacion cancelada");
+                } else {
+                    renderizarFormularioPut(producto);
+                }
+            });
+        }
+
+
+        function renderizarFormularioPut(producto) {
+            console.table(producto);
+            
+            let htmlForm = `
+            <!-- Formulario PUT product -->
+            <h3>Modificar producto</h3>
+            
+            <form id="modifyProductForm">
+                
+                <input type="hidden" name="id" id="idProd" value="${producto.id}">
+                
+                <label for="categoryProd">Categoria</label>
+                <select name="category" id="categoryProd" required>
+                    <option value="food">Comida</option>
+                    <option value="drink">Bebida</option>
+                    </select>
+                    
+                    <label for="imageProd">Imagen</label>
+                    <input type="text" name="image" id="imageProd" value="${producto.image}" required>
+
+                <label for="nameProd">Nombre</label>
+                <input type="text" name="name" id="nameProd" value="${producto.name}" required>
+
+                <label for="priceProd">Precio</label>
+                <input type="number" name="price" id="priceProd" min="1" value="${producto.price}" required>
+
+                <input type="submit" value="Modificar producto">
+
+            </form>
             `;
 
-            contenedorProductos.innerHTML = htmlProducto;
+            contenedorForm.innerHTML = htmlForm;
+
+            const modifyProductForm = document.getElementById("modifyProductForm");
+
+            modifyProductForm.addEventListener("submit", async event => {
+
+                event.preventDefault(); // Evitamos el envio por defecto del <form>
+                
+                // Obtenemos la info del formulario en un objeto FormData
+                const formData = new FormData(event.target);
+
+                // Transformamos el objeto FormData en un objeto literal JS
+                const formObj = Object.fromEntries(formData.entries());
+
+                try {
+                    const response = await fetch(`${urlBase}/api/products`, {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(formObj)
+                    });
+
+                    const data = await response.json(); // El parseo es una operacion asincrona
+
+                    console.log(data.message);
+                    alert(data.message);
+
+                    // Limpiamos visualmente la pantalla
+                    contenedorForm.innerHTML = "";
+                    contenedorProductos.innerHTML = "";
+
+
+                } catch (error) {
+                    console.error("Ocurrio un error al modificar un producto: ", error);
+                }
+            })
         }
+
+
     </script>
 </body>
 </html>

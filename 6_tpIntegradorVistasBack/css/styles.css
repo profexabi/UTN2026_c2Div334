@@ -77,3 +77,9 @@ ul {
     justify-content: space-between;
     width: 100%;
 }
+
+#createProductForm, #modifyProductForm {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
