@@ -16,12 +16,10 @@
 # Cronograma clases
 
 ## Prox clase
-- Vistas para consumir los endpoints
-    - GET all products
-    - GET product by id
+- Baja logica en la vista del PUT 
+    - Agregar el campo active
 
-- Endpoints POST, PUT y DELETE
-- Vistas para POST, PUT y DELETE
+- Mostrar el estilo de los produtos inactivos
 
 ---
 

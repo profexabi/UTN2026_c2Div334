@@ -1,10 +1,26 @@
 /* ================
-    Variables
+Variables
 ================ */
 :root {
+    --primary-yellow: #fae1a9;
+    --primary-black: #20170e;
+    --primary-purple: #8f5192;
+    --primary-red: #d1411f;
+    --primary-green: #abb751;
+    
+    
     --naranja-principal: #fc6d01;
     --amarillo-principal: #ffb300;
     --beige-principal: #fcf8ec;
+
+    
+    --mensaje-verde: #0a3622;
+    --fondo-verde: #d1e7dd;
+    --borde-verde: #a3cfbb;
+    
+    --mensaje-rojo: #58151c;
+    --fondo-rojo: #f8d7da;
+    --borde-rojo: #f1aeb5;
 }
 
 /* ================
@@ -31,6 +47,26 @@ ul {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+
+
+.mensaje {
+    margin: 0 auto;
+    padding: 20px 60px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+.error {
+    color: var(--mensaje-rojo);
+    background-color: var(--fondo-rojo);
+    border: 2px solid var(--borde-rojo);
+}
+
+.exito {
+    color: var(--mensaje-verde);
+    background-color: var(--fondo-verde);
+    border: 2px solid var(--borde-verde);
 }
 
 

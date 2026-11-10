@@ -49,9 +49,18 @@
         <section id="contenedor-productos"></section>
     </main>
 
+    
     <script>
         const urlBase = "http://localhost:3000";
         const contenedorProductos = document.getElementById("contenedor-productos");
+        
+
+        function mostrarError(mensaje) {
+            contenedorProductos.innerHTML = `
+                <p class="mensaje error">${mensaje}</p>
+            `;
+        }
+
 
         async function obtenerProductos() {
             try {
@@ -61,6 +70,13 @@
                 // Parseamos el JSON de los productos del body de la HTTP Response que nos trae el servidor
                 const data = await response.json();
 
+                // Filtramos los codigos fuera del rango 200, ej 400 o 500
+                if (!response.ok) {
+                    // Muestro el error por pantalla
+                    console.error(data.message);
+                    return mostrarError(data.message);
+                }
+
                 const productos = data.payload;
                 
                 renderizarProductos(productos);
@@ -68,8 +84,10 @@
             } catch (error) {
                 // Estos errores son errores REALES de red, no capturan 404, 500, etc
                 console.error("Error al obtener productos: ", error);
+                return mostrarError("Error de conexion con el servidor");
             }
         }
+        
 
         function renderizarProductos(array) {
             let htmlProductos = "";
