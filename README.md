@@ -16,6 +16,7 @@
 # Cronograma clases
 
 ## Prox clase
+- Repaso conceptual del patron MVC -> Quien llama a quien
 - Mostrar el estilo de los produtos inactivos
 
 ---

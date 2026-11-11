@@ -3,6 +3,7 @@
 ============================*/
 
 import connection from "../database/db.js";
+import ProductModels from "../models/product.models.js";
 
 
 /////////////////////////////
@@ -11,8 +12,9 @@ export const getAllProducts = async (req, res) => {
 
     // Optimizacion 1: Manejo de errores con try ...catch
     try {
-        // Extraigo SOLO los resultados de la consulta, no la info de las tablas
-        const [rows] = await connection.query("SELECT * FROM products");
+        
+        // El controlador llama al modelo
+        const [rows] = await ProductModels.selectAllProducts();
 
         // console.log(rows); Los productos llegan correctamente
 
@@ -50,9 +52,7 @@ export const getProductById = async (req, res) => {
     // Optimizacion 1: Manejo de errores con try ...catch
     try {
 
-        // Optimizacion 3: Los placeholders "?" evitan ataques de inyeccion SQL, es una manera de hacer consultas SQL mas seguras
-        const sql = `SELECT * FROM products WHERE products.id = ?`
-        const [rows] = await connection.query(sql, [req.id]);
+        const [rows] = await ProductModels.selectProductById(req.id);
 
         // Optimizacion 4: Devuelvo codigo 404 si no existe producto con ese id
         if (rows.length === 0) {
@@ -89,9 +89,7 @@ export const createProduct = async (req, res) => {
         // Aca ya directamente recibimos un objeto
         const { category, image, name, price } = req.body; // Extraemos los valores parseados del cuerpo de la peticion HTTP
 
-        const sql = "INSERT INTO products (name, image, category, price) VALUES (?, ?, ?, ?)";
-
-        const [result] = await connection.query(sql, [name, image, category, price]);
+        const [result] = await ProductModels.insertNewProduct(name, image, category, price);
 
         console.log(result);
 
@@ -124,9 +122,7 @@ export const modifyProduct = async (req, res) => {
         // Gracias al middleware app.use(express.json()) el JSON recibido del formulario ya viene transformado en objeto JS
         const { id, name, image, price, category, active } = req.body;
 
-        const sql = "UPDATE products SET name = ?, image = ?, price = ?, category = ?, active = ? WHERE id = ?";
-
-        const [result] = await connection.query(sql, [name, image, price, category, active, id]);
+        const [result] = await ProductModels.updateProduct(name, image, price, category, active, id);
 
         console.log(result);
 
@@ -161,10 +157,8 @@ export const removeProduct = async (req, res) => {
 
     // Optimizacion 1: Manejo de errores con try ...catch
     try {
-    
-        // Los placeholders -> "?" nos ayudan a evitar los ataques de inyeccion SQL. Es nuestra manera de hacer consultas SQL mas seguras
-        const sql = "DELETE FROM products WHERE id = ?";
-        await connection.query(sql, [req.id]);
+
+        await ProductModels.deleteProduct(req.id);
     
         res.status(200).json({
             message: `Producto con id ${req.id} eliminado exitosamente`
