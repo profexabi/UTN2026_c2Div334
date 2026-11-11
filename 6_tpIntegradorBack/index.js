@@ -196,29 +196,39 @@ app.post("/api/products", validateProduct, async (req, res) => {
 
 
 // PUT product
-app.put("/api/products", async (req, res) => {
+app.put("/api/products", validateProduct, async (req, res) => {
 
     // Optimizacion 1: Manejo de errores con try ...catch
     try {
     
         // TO DO, incorporar modificacion de status
         // Gracias al middleware app.use(express.json()) el JSON recibido del formulario ya viene transformado en objeto JS
-        const {id, name, image, price, category} = req.body;
+        const {id, name, image, price, category, active} = req.body;
     
-        const sql = "UPDATE products SET name = ?, image = ?, price = ?, category = ? WHERE id = ?";
+        const sql = "UPDATE products SET name = ?, image = ?, price = ?, category = ?, active = ? WHERE id = ?";
     
-        await connection.query(sql, [name, image, price, category, id]);
+        const [result] = await connection.query(sql, [name, image, price, category, active, id]);
+
+        console.log(result);
+
+        // Optimizacion 2: Verificamos si realmente se actualizo algo respecto de la informacion previa del producto
+        if (result.changedRows === 0) {
+            return res.status(404).json({
+                message: "No se actualizo el producto"
+            })
+        }
     
         res.status(200).json({
             message: "Producto actualizado exitosamente"
         });
+
 
     } catch (error) {
         console.log("Error obteniendo productos: ", error);
 
         // 500 si fallo la conexion a la BBDD
         res.status(500).json({
-            message: "Error interno al obtener productos"
+            message: "Error interno al modificar productos"
         });
     }
 });

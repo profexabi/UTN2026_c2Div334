@@ -16,9 +16,6 @@
 # Cronograma clases
 
 ## Prox clase
-- Baja logica en la vista del PUT 
-    - Agregar el campo active
-
 - Mostrar el estilo de los produtos inactivos
 
 ---

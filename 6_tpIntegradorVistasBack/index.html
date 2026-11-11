@@ -87,7 +87,7 @@
                 return mostrarError("Error de conexion con el servidor");
             }
         }
-        
+
 
         function renderizarProductos(array) {
             let htmlProductos = "";
@@ -99,6 +99,7 @@
                         <h4>${producto.name}</h4>
                         <p>Id: ${producto.id}</p>
                         <p>$ ${producto.price}</p>
+                        <p>Estado: ${producto.active}</p>
                     </div>
                 `;
             });
