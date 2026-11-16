@@ -17,7 +17,7 @@ import { __dirname, join } from "./src/api/utils/index.js";
 const app = express(); 
 const PORT = environments.port;
 
-app.set("views engine", "ejs"); // Configuramos EJS como motor de plantillas
+app.set("view engine", "ejs"); // Configuramos EJS como motor de plantillas
 app.set("views", join(__dirname, "src/views")); // Le indicamos donde se encuentran las vistas ejs -> src/views
 
 
@@ -46,6 +46,32 @@ app.get("/", (req, res) => {
 
 // Redirijo todas las peticiones a /api/products al modulo product.routes.js
 app.use("/api/products", productRoutes);
+
+// Vista principal
+app.get("/dashboard/principal", (req, res) => {
+    // Nuestra aplicacion renderiza la vista en src/views/index.ejs
+    res.render("index");
+});
+
+// Vista consultar
+app.get("/dashboard/consultar", (req, res) => {
+    res.render("get");
+});
+
+// Vista crear
+app.get("/dashboard/crear", (req, res) => {
+    res.render("post");
+})
+
+// Vista consultar
+app.get("/dashboard/modificar", (req, res) => {
+    res.render("put");
+})
+
+// Vista consultar
+app.get("/dashboard/eliminar", (req, res) => {
+    res.render("delete");
+});
 
 // app.get("/dashboard", viewRoutes)
 
