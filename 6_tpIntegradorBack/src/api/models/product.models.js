@@ -12,6 +12,14 @@ const selectAllProducts = () => {
 }
 
 
+////////////////////////////
+// Obtener productos activos
+const selectActiveProducts = () => {
+    const sql = "SELECT * FROM products WHERE products.active = ?";
+    return connection.query(sql, [1]);
+}
+
+
 /////////////////////////////
 // Obtener producto por id
 const selectProductById = (id) => {
@@ -55,5 +63,6 @@ export default {
     selectProductById,
     insertNewProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    selectActiveProducts
 }

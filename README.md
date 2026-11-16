@@ -11,6 +11,18 @@
     
 ---
 
+## 2o Parcial -> DEFENSA
+### Opcion 1
+- Defensa 24/11
+- Recu 01/12
+
+### Opcion 2
+- Defensa 30/11
+- Recu a definir
+
+---
+
+
 ## Fecha 1er parcial / *20/10 modalidad tp asincrono*
 
 # Cronograma clases

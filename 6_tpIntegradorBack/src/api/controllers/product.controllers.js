@@ -2,7 +2,6 @@
     Controladores producto
 ============================*/
 
-import connection from "../database/db.js";
 import ProductModels from "../models/product.models.js";
 
 
@@ -37,6 +36,34 @@ export const getAllProducts = async (req, res) => {
         console.log("Error obteniendo productos: ", error);
 
         // 500 si fallo la conexion a la BBDD
+        res.status(500).json({
+            message: "Error interno al obtener productos"
+        });
+    }
+}
+
+
+////////////////////////
+// GET active products
+export const getActiveProducts = async (req, res) => {
+    try {
+
+        // Hacemos el llamado al modelo para obtener productos activos
+        const [rows] = await ProductModels.selectActiveProducts();
+
+        if (rows.length === 0) {
+            return res.status(404).json({
+                message: "No se encontraron productos activos"
+            });
+        }
+
+        res.status(200).json({
+            payload: rows
+        });
+
+    } catch (error) {
+        console.log("Error obteniendo productos activos: ", error);
+
         res.status(500).json({
             message: "Error interno al obtener productos"
         });
