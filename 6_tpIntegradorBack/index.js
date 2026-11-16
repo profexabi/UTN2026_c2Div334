@@ -23,7 +23,7 @@ app.set("views", join(__dirname, "src/views")); // Le indicamos donde se encuent
 
 
 /*==================
-Middlewares
+    Middlewares
 ==================*/
 // Middleware para servir archivos estaticos
 app.use(express.static(join(__dirname, "src/public"))); // Ahora decimos que los archivos estaticos estan en public
