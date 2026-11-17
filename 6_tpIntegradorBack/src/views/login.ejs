@@ -1,0 +1,35 @@
+<%- include("partials/head.ejs") %>
+
+<main>
+    <h3 class="centrado"> <%= about %> </h3>
+
+    <!-- Formulario de envio de login
+        
+    method: indica que tipo de peticion HTTP va a hacer, una peticion HTTP POST
+    action: indica a que URL se va a hacer esta peticion HTTP POST
+
+    Estos datos se envian con un tipo de formato llamado `application/x-www-form-urlencoded`
+    Para recibir estos datos como objetos en nuestros endpoints, necesitamos del siguiente middleware para parsear estos daots
+    
+    app.use(express.urlencoded({extended: true}));
+    -->
+    <form class="form-login" action="/login" method="POST">
+
+        <label for="emailUser">Email</label>
+        <input type="email" name="email" id="emailUser" required>
+
+        <label for="passwordUser">Password</label>
+        <input type="password" name="password" id="passwordUser" required>
+
+        <input type="submit" value="Login">
+
+    </form>
+
+    <!-- Si al renderizar la plantilla, recibimos un error, lo visualizamos aca -->
+    <% if (typeof error !== "undefined") { %>
+        <p class="mensaje error centrado"> <%= error %> </p>
+    <% } %>
+
+</main>
+
+<%- include("partials/footer.ejs") %>

@@ -69,6 +69,10 @@ ul {
     border: 2px solid var(--borde-verde);
 }
 
+.centrado {
+    text-align: center;
+}
+
 
 /* ================
     Tarjetas
@@ -118,4 +122,15 @@ ul {
     display: flex;
     flex-direction: column;
     width: 50%;
+}
+
+
+
+
+/* ================
+    Login
+================ */
+.form-login {
+    display: flex;
+    flex-direction: column;
 }

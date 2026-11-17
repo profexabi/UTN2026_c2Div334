@@ -69,9 +69,19 @@ const validateProduct = (req, res, next) => {
 }
 
 
+// Middleware de ruta para proteger las rutas (las vistas del dashboard)
+const requireLogin = (req, res, next) => {
+    // Si no existe usuario en la sesion, redirigimos a la pantalla login
+    if (!req.session.user) {
+        return res.redirect("/login");
+    }
+}
+
+
 // Exportamos nuestros middlewares para llevarlos a otros modulos
 export {
     loggerUrl,
     validateId,
-    validateProduct
+    validateProduct,
+    requireLogin
 }

@@ -5,8 +5,9 @@ import express from "express";
 import environments from "./src/api/config/environments.js"; // Traigo el puerto del .env
 import cors from "cors";
 import { loggerUrl } from "./src/api/middlewares/middlewares.js";
-import { productRoutes, viewRoutes } from "./src/api/routes/index.js";
+import { authRoutes, productRoutes, viewRoutes } from "./src/api/routes/index.js";
 import { __dirname, join } from "./src/api/utils/index.js";
+import session from "express-session";
 
 
 
@@ -15,7 +16,8 @@ import { __dirname, join } from "./src/api/utils/index.js";
 ==================*/
 // Creamos una instancia de aplicacion de express, app contendra ahora todos los metodos que necesitaremos para crear un servidor
 const app = express(); 
-const PORT = environments.port;
+const { port, session_key } = environments;
+const PORT = port;
 
 app.set("view engine", "ejs"); // Configuramos EJS como motor de plantillas
 app.set("views", join(__dirname, "src/views")); // Le indicamos donde se encuentran las vistas ejs -> src/views
@@ -32,14 +34,23 @@ app.use(cors()); // Middleware CORS basico para permitir todas las solicitudes
 
 app.use(express.json()); // Cuando enviamos informacion en el cuerpo del body de la request (POST y PUT) este middleware parseara el JSON recibido y lo recibiremos en el endpoint ya como un objeto
 
+app.use(express.urlencoded({extended: true})); // Middleware para parsear los datos que recibimos con el envio nativo de un HTML <form>
+
 app.use(loggerUrl);
 
-// Necesito contruir las rutas para apuntar a las vistas en src/views y los archivos estaticos en src/static
+// Middleware de sesion
+app.use(session({
+    secret: session_key,
+    resave: false, // Evita guardar la sesion si no hubo cambios
+    saveUninitialized: true // No guarda sesiones vacias
+}));
+
 
 
 /*==================
     Vistas
 ==================*/
+
 app.get("/", (req, res) => {
     res.send("Hola mundo desde Express.js");
 });
@@ -49,6 +60,9 @@ app.use("/api/products", productRoutes);
 
 // Redirijo todas las peticiones a /dashboard a viewRoutes.js (view.routes.js)
 app.use("/dashboard", viewRoutes);
+
+// Rutas de autenticacion
+app.use("/", authRoutes);
 
 
 app.listen(PORT, () => {
