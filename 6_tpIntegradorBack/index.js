@@ -5,7 +5,7 @@ import express from "express";
 import environments from "./src/api/config/environments.js"; // Traigo el puerto del .env
 import cors from "cors";
 import { loggerUrl } from "./src/api/middlewares/middlewares.js";
-import { productRoutes } from "./src/api/routes/index.js";
+import { productRoutes, viewRoutes } from "./src/api/routes/index.js";
 import { __dirname, join } from "./src/api/utils/index.js";
 
 
@@ -38,7 +38,7 @@ app.use(loggerUrl);
 
 
 /*==================
-    Endpoints -> (URL + Verbo HTTP + Logica)
+    Vistas
 ==================*/
 app.get("/", (req, res) => {
     res.send("Hola mundo desde Express.js");
@@ -47,41 +47,8 @@ app.get("/", (req, res) => {
 // Redirijo todas las peticiones a /api/products al modulo product.routes.js
 app.use("/api/products", productRoutes);
 
-// Vista principal
-app.get("/dashboard/principal", (req, res) => {
-    // Nuestra aplicacion renderiza la vista en src/views/index.ejs
-    res.render("index");
-});
-
-// Vista consultar
-app.get("/dashboard/consultar", (req, res) => {
-    res.render("get");
-});
-
-// Vista crear
-app.get("/dashboard/crear", (req, res) => {
-    res.render("post");
-})
-
-// Vista consultar
-app.get("/dashboard/modificar", (req, res) => {
-    res.render("put");
-})
-
-// Vista consultar
-app.get("/dashboard/eliminar", (req, res) => {
-    res.render("delete");
-});
-
-// app.get("/dashboard", viewRoutes)
-
-// Opcion 2 sin modularizar las rutas
-// app.get("/dashboard/principal", vistaPrincipal)
-// app.get("/dashboard/consultar", consuiltar)
-// app.get("/dashboard/crear", vistaCrear)
-// app.get("/dashboard/modificar", vistaModificar)
-// app.get("/dashboard/eliminar", vistaEliminar)
-
+// Redirijo todas las peticiones a /dashboard a viewRoutes.js (view.routes.js)
+app.use("/dashboard", viewRoutes);
 
 
 app.listen(PORT, () => {

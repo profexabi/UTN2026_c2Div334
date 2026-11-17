@@ -1,57 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include("partials/head.ejs") %>
+<%- include("partials/header.ejs") %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consultar</title>
 
-    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
-
-    <!-- Preset CSS -->
-    <link rel="stylesheet" href="https://cdn.simplecss.org/simple.css">
-
-    <!-- CSS Externo -->
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-
-<body>
-
-    <header>
-        <div class="logo-container">
-            <img class="logo-header" src="img/logo.jpg" alt="logo">
-        </div>
-
-        <nav>
-            <ul>
-                <li class="li-header">
-                    <a href="index.html">Principal</a>
-                </li>
-
-                <li class="li-header">
-                    <a href="get.html">Obtener</a>
-                </li>
-
-                <li class="li-header">
-                    <a href="post.html">Crear</a>
-                </li>
-
-                <li class="li-header">
-                    <a href="put.html">Modificar</a>
-                </li>
-
-                <li class="li-header">
-                    <a href="delete.html">Eliminar</a>
-                </li>
-            </ul>
-        </nav>
-    </header>
 
     <main>
         <!-- Formulario POST product -->
         <section class="createProduct-container">
 
-            <h3>Crear producto</h3>
+            <h3><%= about %></h3>
 
             <form id="createProductForm">
 
@@ -79,10 +35,6 @@
         <section id="contenedor-productos"></section>
     </main>
 
-    <script>
+    <script src="/js/post.js"></script>
 
-
-    </script>
-</body>
-
-</html>
+<%- include("partials/footer.ejs") %>
