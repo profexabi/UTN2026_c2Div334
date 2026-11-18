@@ -140,5 +140,7 @@ ul {
 }
 
 #btn-logout {
-    height: 37.19px;
+    height: 36px;
+    padding-top: 1px;
+    padding-bottom: 1px;
 }

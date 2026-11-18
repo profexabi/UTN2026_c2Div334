@@ -15,7 +15,7 @@ router.get("/login", (req, res) => {
 });
 
 
-// Endpoint que atendera las peticiones POST a /login
+// Endpoint para loguear a un admin (atendera las peticiones POST a /login)
 router.post("/login", async (req, res) => {
     try {
 
@@ -44,6 +44,7 @@ router.post("/login", async (req, res) => {
             })
         }
 
+        // Guardamos el usuario
         const user = rows[0];
 
         // Guardamos la sesion
@@ -56,13 +57,37 @@ router.post("/login", async (req, res) => {
         // Creada la sesion, redirigimos a la vista del dashboard
         res.redirect("/dashboard/principal");
 
+
     } catch (error) {
         console.log("Error en el login: ", error);
         res.status(500).json({
             message: "Error interno del servidor"
         });
     }
+});
+
+
+// Endpoint para destruir session
+router.post("/logout", (req, res) => {
+
+    // 1. Destruye la sesion
+    req.session.destroy((err) => {
+
+        // Si saltara algun error 
+        if (err) {
+            console.log("Error al destruir la sesion: ", err);
+
+            return res.status(500).json({
+                message: "Error al cerrar la sesion"
+            });
+        }
+
+        // 2. Al terminar de destruir la sesion (exitosamente), redirigimos la login
+        res.redirect("/login");
+
+    })
 })
+
 
 
 // Exportamos las rutas
