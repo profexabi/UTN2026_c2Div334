@@ -5,7 +5,7 @@ import express from "express";
 import environments from "./src/api/config/environments.js"; // Traigo el puerto del .env
 import cors from "cors";
 import { loggerUrl } from "./src/api/middlewares/middlewares.js";
-import { authRoutes, productRoutes, viewRoutes } from "./src/api/routes/index.js";
+import { authRoutes, productRoutes, userRoutes, viewRoutes } from "./src/api/routes/index.js";
 import { __dirname, join } from "./src/api/utils/index.js";
 import session from "express-session";
 
@@ -57,6 +57,8 @@ app.get("/", (req, res) => {
 
 // Redirijo todas las peticiones a /api/products al modulo product.routes.js
 app.use("/api/products", productRoutes);
+
+app.use("/api/users", userRoutes);
 
 // Redirijo todas las peticiones a /dashboard a viewRoutes.js (view.routes.js)
 app.use("/dashboard", viewRoutes);

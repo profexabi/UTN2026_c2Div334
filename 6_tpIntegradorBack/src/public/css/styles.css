@@ -130,7 +130,7 @@ ul {
 /* ================
     Login
 ================ */
-.form-login {
+.form-login, #createUserForm {
     display: flex;
     flex-direction: column;
 }

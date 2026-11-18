@@ -1,0 +1,35 @@
+<%- include("partials/head.ejs") %>
+<%- include("partials/header.ejs") %>
+
+
+
+    <main>
+        <!-- Formulario POST user -->
+        <section class="createUser-container">
+
+            <h3><%= about %></h3>
+
+            <form id="createUserForm" action="/api/users" method="POST">
+
+                <label for="nameUser">Nombre</label>
+                <input type="text" name="name" id="nameUser" required>
+
+                <label for="emailUser">Email</label>
+                <input type="email" name="email" id="emailUser" required>
+
+                <label for="passwordUser">Password</label>
+                <input type="password" name="password" id="passwordUser" required>
+
+                <input type="submit" value="Crear usuario">
+
+            </form>
+
+        </section>
+
+        <% if (typeof message !== "undefined") { %>
+            <p class="mensaje exito centrado"> <%= message %> </p>
+        <% } %>
+    </main>
+
+
+<%- include("partials/footer.ejs") %>

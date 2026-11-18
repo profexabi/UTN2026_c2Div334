@@ -45,6 +45,16 @@ export const vistaCrear = (req, res) => {
 }
 
 
+// Vista crear usuario
+export const vistaCrearUser = (req, res) => {
+    res.render("createUser", {
+        title: "Crear usuario",
+        about: "Crear usuario admin"
+    });
+}
+
+
+
 // Vista modificar
 export const vistaModificar = (req, res) => {
     res.render("put", {

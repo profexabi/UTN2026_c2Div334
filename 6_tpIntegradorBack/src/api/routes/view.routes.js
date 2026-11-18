@@ -2,7 +2,7 @@
     Rutas vistas
 ======================*/
 import { Router } from "express";
-import { vistaConsultar, vistaCrear, vistaEliminar, vistaModificar, vistaPrincipal } from "../controllers/view.controllers.js";
+import { vistaConsultar, vistaCrear, vistaCrearUser, vistaEliminar, vistaModificar, vistaPrincipal } from "../controllers/view.controllers.js";
 import { requireLogin } from "../middlewares/middlewares.js";
 const router = Router();
 
@@ -15,8 +15,12 @@ router.get("/principal", requireLogin, vistaPrincipal);
 router.get("/consultar", requireLogin, vistaConsultar);
 
 
-// Vista crear
+// Vista crear producto
 router.get("/crear", requireLogin, vistaCrear)
+
+
+// Vista crear usuario
+router.get("/crearUser", requireLogin, vistaCrearUser);
 
 
 // Vista modificar
