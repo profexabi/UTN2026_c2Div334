@@ -134,3 +134,11 @@ ul {
     display: flex;
     flex-direction: column;
 }
+
+#logout-container {
+    align-self: flex-start;
+}
+
+#btn-logout {
+    height: 37.19px;
+}
